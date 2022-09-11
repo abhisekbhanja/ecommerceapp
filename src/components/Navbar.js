@@ -33,12 +33,22 @@ export default function Navbar() {
     // window.reload();
     window.location.reload(false);
   };
+  const nam=useSelector((state)=> state.ShowuserReducer)
+  //console.log(nam);
 
+ const showstore=async()=>{
+  const datashow=await nam
+  console.log("ll");
+  console.log(datashow);
+}
+useEffect(() => {
+showstore()
+},[])
   return (
     <div>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
         <Link to="/" className="navbar-brand" href="#">
-          Ecart5
+          Ecart5 (Testing)
         </Link>
 
         <div className="dropdown ml-auto">
