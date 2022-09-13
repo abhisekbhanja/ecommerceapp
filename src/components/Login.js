@@ -23,8 +23,8 @@ export default function Login() {
      if(datashow=="login successfully"){
       setloginerrmsg(datashow)
       setS("alert alert-success")
-      navigate("/")
-      window.location.reload()
+      // navigate("/")
+      // window.location.reload()
      }
      else if(datashow=="invalid credentials"){
       setloginerrmsg(datashow)
@@ -65,6 +65,7 @@ export default function Login() {
         </div>
        <div className="form-group">
           <input type="password"
+          autoComplete="true"
           className={errors.password?'form-control is-invalid':'form-control'}
           {...register("password",{required:"this field is required"})}
           placeholder="Enter your password" />

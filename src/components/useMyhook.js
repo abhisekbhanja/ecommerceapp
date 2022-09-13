@@ -11,9 +11,11 @@ const useMyhook=()=> {
          }
        }
       )
+      
       setData(alldata.data.data)
   }
   useEffect(() => {
+    //console.log(data);
    showUser()
   }, [data])
 

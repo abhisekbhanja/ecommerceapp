@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { productsContext } from "../ProductState/productsContext";
+import { loaduser, showuser } from "../state/action-creator";
 import "../stylesheet/cart.css";
 import useMyhook from "./useMyhook";
 
@@ -23,7 +24,7 @@ export default function Navbar() {
     
   }, [data])
   
-  localStorage.setItem('userid',data._id)
+  // localStorage.setItem('userid',data._id)
   // const l=data.cart_item.length
  //console.log(data.__v)
 
@@ -33,22 +34,41 @@ export default function Navbar() {
     // window.reload();
     window.location.reload(false);
   };
-  const nam=useSelector((state)=> state.ShowuserReducer)
-  //console.log(nam);
+  //onst name=useSelector((state)=> state.user_authReducer)
+  //const [username, setusername] = useState()
+  // const showUser=async()=>{
+  //   console.log(await name);
+  //   setusername(name)
+  // }
 
- const showstore=async()=>{
-  const datashow=await nam
-  console.log("ll");
-  console.log(datashow);
-}
-useEffect(() => {
-showstore()
-},[])
+  // const dispatch = useDispatch();
+  // setTimeout(() => {
+  //   console.log(dispatch(loaduser()));
+  // }, 1000);
+  // const s=async()=>{
+  //   console.log(await dispatch(loaduser()));
+  // }
+   
+  //  useEffect(() => {
+  //     s()
+  //  }, [])
+  const dispatch = useDispatch();
+  const name=useSelector((state)=> state.user_authReducer)
+  useEffect(() => {
+    
+   dispatch(loaduser())
+  }, [dispatch])
+ const [username, setusername] = useState("")
+
+  console.log(name);
+  
+  
+
   return (
     <div>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
         <Link to="/" className="navbar-brand" href="#">
-          Ecart5 (Testing)
+          Ecart5 (Testing) {name}
         </Link>
 
         <div className="dropdown ml-auto">

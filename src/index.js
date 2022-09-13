@@ -6,17 +6,28 @@ import reportWebVitals from './reportWebVitals';
 
 
 //for store
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import allreducers from './state/reducers/index';
 import { Provider } from 'react-redux';
-
-
+import Thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+//const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 //for store
+// const store = createStore(
+//   allreducers,applyMiddleware(ReduxThunk)
+   
+//   );
+
+const intialState = {};
+
+const middleware = [Thunk];
+
 const store = createStore(
   allreducers,
-    {},
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+  intialState,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
+
 
 
 ReactDOM.render(
