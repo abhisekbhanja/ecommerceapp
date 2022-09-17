@@ -24,7 +24,7 @@ export default function Login() {
       setloginerrmsg(datashow)
       setS("alert alert-success")
       navigate("/")
-      window.location.reload()
+      //window.location.reload()
      }
      else if(datashow=="invalid credentials"){
       setloginerrmsg(datashow)

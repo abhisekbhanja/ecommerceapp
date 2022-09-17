@@ -1,3 +1,6 @@
+import axios from "axios";
+import { GET_USERS_REQUEST,GET_USERS_SUCCESS,GET_USERS_FAIL } from "./constants/userconstans";
+
 export const addproduct = (title, image, price, id,email) => {
   return {
     type: "add",
@@ -46,3 +49,26 @@ export const signupuser=(signupData)=>{
     signupData:signupData
   };
 }
+
+
+export const userAction = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_USERS_REQUEST });
+    const {data}=await axios.get(process.env.REACT_APP_SURL,
+      {
+        headers: {
+           "login-token" : localStorage.getItem("loginusertoken")
+         }
+       }
+      )
+    dispatch({ type: GET_USERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_USERS_FAIL,
+      payload:
+        error.data && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

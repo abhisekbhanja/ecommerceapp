@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { productsContext } from "../ProductState/productsContext";
+import { userAction } from "../state/action-creator";
 import "../stylesheet/cart.css";
 import useMyhook from "./useMyhook";
 
-export default function Navbar() {
+export default function Navbar(props) {
   const count = useSelector((state) => state.mycart);
   const carts = useContext(productsContext);
   // const [showbtn, setshowbtn] = useState(true);
@@ -34,11 +35,24 @@ export default function Navbar() {
     window.location.reload(false);
   };
 
+
+
+  ///////////////////////
+  const dispatch = useDispatch();
+  const {users} = useSelector((state) => state.userReducer);
+     
+  //   console.log("////////////");
+  // console.log(users);
+  //const alluser=userList;
+  useEffect(() => {
+      dispatch(userAction());
+    }, [dispatch]);
+
   return (
     <div>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
         <Link to="/" className="navbar-brand" href="#">
-          Ecart5 (feature3)
+          Ecart5 (feature3) {users?users.toString():" "}
         </Link>
 
         <div className="dropdown ml-auto">

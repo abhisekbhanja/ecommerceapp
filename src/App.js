@@ -13,6 +13,7 @@ import Products from "./components/Products";
 import Signup from "./components/Signup";
 import Success from "./components/Success";
 import useMyhook from "./components/useMyhook";
+import User from "./components/User";
 
 //ADD THE ACTIONS NAME FROM ACTION FILE INDEX.JS
 import { addproduct, removeproduct } from "./state/action-creator";
@@ -22,6 +23,9 @@ function App() {
 
   const [loading, setloading] = useState(true);
   const [mdata, setmdata] = useState();
+
+
+  
 
   const fetchData = async () => {
     let adata = await axios.get(`${process.env.REACT_APP_URL}?limit=50`);
@@ -119,6 +123,7 @@ function App() {
           <Route exact path="/success" element={<Success />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/user" element={<User />} />
         </Routes>
       </div>
     </Router>
