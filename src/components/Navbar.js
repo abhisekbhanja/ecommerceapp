@@ -23,7 +23,7 @@ export default function Navbar() {
     
   }, [data])
   
-  localStorage.setItem('userid',data._id)
+  //localStorage.setItem('userid',data._id)
   // const l=data.cart_item.length
  //console.log(data.__v)
 

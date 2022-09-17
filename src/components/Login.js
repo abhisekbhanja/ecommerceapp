@@ -11,35 +11,14 @@ export default function Login() {
     const [loginerrmsg, setloginerrmsg] = useState("");
     const [S, setS] = useState("");
 
-    let navigate=useNavigate();
+    
     //USE THE DISPATCH
   const dispatch = useDispatch();
-
+  let navigate=useNavigate();
   const loginuserData = useSelector((state) => state.user_authReducer);
- 
-
-  const showstore=async()=>{
-     const datashow=await loginuserData
-     if(datashow=="login successfully"){
-      setloginerrmsg(datashow)
-      setS("alert alert-success")
-      navigate("/")
-      window.location.reload()
-     }
-     else if(datashow=="invalid credentials"){
-      setloginerrmsg(datashow)
-      setS("alert alert-danger")
-     }
-
-   
-    
+  if(loginuserData.success==true){
+    navigate("/")
   }
- useEffect(() => {
-  showstore()
- })
- 
-  
-  
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
@@ -73,7 +52,8 @@ export default function Login() {
        <div className="form-group">
           <input type="submit" className='btn btn-success' value="login" />
         </div>
-        <p className={S}>{loginerrmsg}</p>
+        <p className="text-success">{loginuserData.msg}</p>
+        <p className='text-danger'>{loginuserData.loginmsg}</p>
         <p>create an account? <Link to='/signup'>click here</Link></p>
        
        </form>

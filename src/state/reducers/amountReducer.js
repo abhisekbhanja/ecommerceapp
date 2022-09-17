@@ -52,12 +52,12 @@ const cartReducer = async(state = [], action) => {
       }
 
       case "delete_item":
-      console.log("remove" + action.q3);
+      //onsole.log("remove" + action.q3);
      
     try {
       const response=axios.put(`${process.env.REACT_APP_SURL}/delete`,{_id:action.userid,id:action.q3});
       if(response.status==201){
-        console.log("remove")
+        //console.log("remove")
         state= "remove"
     }
     } catch (error) {

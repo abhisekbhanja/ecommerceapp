@@ -13,6 +13,7 @@ import Products from "./components/Products";
 import Signup from "./components/Signup";
 import Success from "./components/Success";
 import useMyhook from "./components/useMyhook";
+import Userprofile from "./components/Userprofile";
 
 //ADD THE ACTIONS NAME FROM ACTION FILE INDEX.JS
 import { addproduct, removeproduct } from "./state/action-creator";
@@ -119,6 +120,7 @@ function App() {
           <Route exact path="/success" element={<Success />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/profile" element={<Userprofile />} />
         </Routes>
       </div>
     </Router>

@@ -1,43 +1,25 @@
-import axios from "axios";
-import { USER_SINGUP_SUCCESS } from "../Constants/actionType";
+
+import { EXIST_USER, SHOW_USER_PROFILE, USERLOGIN_FAILED, USER_LOGIN, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS, } from "../Constants/actionType";
 
 const userlogReducer = (state=" " , action) => {
+  
     switch (action.type) {
-      // case "login":
+      case USER_LOGIN:
+        return state={msg:action.payload,success:true}
+      
+      case USERLOGIN_FAILED:
+        return state={loginmsg:action.payload}
 
-      // //console.log(action.loginData)
-      //  try {
-      //      const response=await axios.post(`${process.env.REACT_APP_SURL}/login`,action.loginData);
-           
-      //      if(response.status==200){
-      //           // console.log(state);
-      //           localStorage.setItem('loginusertoken',response.data.token)
-      //           // console.log("login//////////")
-      //           state= "login successfully"
-      //           return state
-      //       }
-      //  } 
-      //  catch (err) {
-      //   if(err.response.status==401)
-      //   { 
-          
-      //    state="invalid credentials"
-      //    //console.log(state)
-      //   return state
-      //     //console.log('exist')
-      //   }
-      //   else{
-         
-      //     console.log('something is wrong try again')
-         
-      //   }
-      // }
+      case USER_SIGNUP_REQUEST:
+        return state = {loading:true}
 
-      case USER_SINGUP_SUCCESS:
-        console.log(action.payload);
-        return state = "account create successfully"
-        
-        
+      case USER_SIGNUP_SUCCESS:
+        return state = {msg:"account create successfully",status:true,loading:false}
+      case EXIST_USER:
+        return state={errmsg:action.payload,loading:false} 
+      
+      case SHOW_USER_PROFILE:
+        return state={profile:action.payload}
   
       default:
         return state;

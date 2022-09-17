@@ -22,9 +22,9 @@ export default ()=> {
       const signup_userData = useSelector((state) => state.user_authReducer);
 
   console.log(signup_userData);
-  useEffect(() => {
-    dispatch(signupuser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(signupuser());
+  // }, [dispatch]);
   const {
     register,
     handleSubmit,
@@ -145,8 +145,9 @@ export default ()=> {
           <div className="form-group">
             <input type="submit" className="btn btn-primary" value="signup" />
           </div>
-          <p className={signup_userData?"alert alert-success":" "}>{signup_userData?signup_userData:" "} </p>
-          <p className="text-danger">err</p>
+          <p>{signup_userData.loading==true?"loading...":" "}</p>
+          <p className={signup_userData.status==true?"alert alert-success":" "}>{signup_userData?signup_userData.msg:" "} </p>
+          <p className="text-danger">{signup_userData.errmsg!=""?signup_userData.errmsg:" "}</p>
           <p>
             already have account? <Link to="/login">click here</Link>
           </p>
