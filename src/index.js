@@ -3,20 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-
-//for store
-import { createStore } from 'redux';
-import allreducers from './state/reducers/index';
+import store from './store';
 import { Provider } from 'react-redux';
 
 
-//for store
-const store = createStore(
-  allreducers,
-    {},
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+
 
 
 ReactDOM.render(

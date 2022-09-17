@@ -1,3 +1,6 @@
+import axios from "axios";
+import { USER_SINGUP_REQUEST, USER_SINGUP_SUCCESS } from "../Constants/actionType";
+
 export const addproduct = (title, image, price, id,email) => {
   return {
     type: "add",
@@ -40,9 +43,32 @@ export const loginuser=(loginData)=>{
   };
 }
 
-export const signupuser=(signupData)=>{
-  return {
-    type: "signup",
-    signupData:signupData
-  };
-}
+// export const signupuser=(signupData)=>{
+//   return {
+//     type: "signup",
+//   };
+// }
+
+export const signupuser = (signupData) => async (dispatch) => {
+
+    dispatch({ type: USER_SINGUP_REQUEST });
+    try {
+      const response=await axios.post(`${process.env.REACT_APP_SURL}/register`,signupData);
+      if(response.status==200){
+        dispatch({ type: USER_SINGUP_SUCCESS, payload: response });
+      }
+  } 
+  catch (err) {
+  
+ }
+    
+//   } catch (error) {
+//     dispatch({
+//       type: USER_SINGUP_FAILED,
+//       payload:
+//         error.data && error.response.data.message
+//           ? error.response.data.message
+//           : error.message,
+//     });
+//   }
+};

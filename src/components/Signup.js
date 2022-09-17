@@ -21,25 +21,10 @@ export default ()=> {
       const dispatch = useDispatch();
       const signup_userData = useSelector((state) => state.user_authReducer);
 
-      const showmsg=async()=>{
-        const datashow=await signup_userData
-        if(datashow=="true"){
-         seterrmsg("Your account craete successfully")
-         setS("alert alert-success")
-        //  navigate("/")
-        }
-        else if(datashow=="false"){
-         seterrmsg("already email exist")
-         setS("alert alert-danger")
-        }
-   
-       console.log(datashow)
-       
-     }
-    useEffect(() => {
-     showmsg()
-    })
-
+  console.log(signup_userData);
+  useEffect(() => {
+    dispatch(signupuser());
+  }, [dispatch]);
   const {
     register,
     handleSubmit,
@@ -65,6 +50,7 @@ export default ()=> {
           <div className="form-group">
             <input
               type="text"
+              value="tom"
               className={
                 errors.firstname ? "form-control is-invalid" : "form-control"
               }
@@ -76,6 +62,7 @@ export default ()=> {
           <div className="form-group">
             <input
               type="text"
+              value="ball"
               className={
                 errors.lastname ? "form-control is-invalid" : "form-control"
               }
@@ -87,6 +74,7 @@ export default ()=> {
           <div className="form-group">
             <input
               type="number"
+              value="9756754678"
               className={
                 errors.mobile ? "form-control is-invalid" : "form-control"
               }
@@ -101,6 +89,7 @@ export default ()=> {
           </div>
           <div className="form-group">
             <input
+            value="tomball1@gmail.com"
               type="text"
               className={
                 errors.email ? "form-control is-invalid" : "form-control"
@@ -122,6 +111,7 @@ export default ()=> {
           <div className="form-group">
             <input
               type="password"
+              value="Tomball@1234"
               className={
                 errors.password ? "form-control is-invalid" : "form-control"
               }
@@ -144,9 +134,10 @@ export default ()=> {
               className={
                 errors.cpassword ? "form-control is-invalid" : "form-control"
               }
-              {...register('cpassword',{required: "this field is rquired",
-              validate: value =>
-              value === password.current || "The passwords do not match"})}
+              // {...register('cpassword',{required: "this field is rquired",
+              // validate: value =>
+              // value === password.current || "The passwords do not match"})}
+              value="Tomball@1234"
               placeholder="Confirm your password"
             />
             <p className="text-danger">{errors.cpassword?.message}</p>
@@ -154,8 +145,8 @@ export default ()=> {
           <div className="form-group">
             <input type="submit" className="btn btn-primary" value="signup" />
           </div>
-          <p className="text-success">{submitmsg}</p>
-          <p className={S}>{errmsg}</p>
+          <p className={signup_userData?"alert alert-success":" "}>{signup_userData?signup_userData:" "} </p>
+          <p className="text-danger">err</p>
           <p>
             already have account? <Link to="/login">click here</Link>
           </p>
