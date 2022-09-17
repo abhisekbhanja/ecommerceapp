@@ -41,7 +41,7 @@ const userlogReducer = (state="" , action) => {
       case "showuser":
         //console.log({...state,payload:action.payload});
         return {...state,
-          p: action.payload,  
+          users: action.payload,  
         }
   
       default:

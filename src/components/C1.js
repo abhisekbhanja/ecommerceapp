@@ -1,22 +1,24 @@
 import React, { useEffect } from 'react'
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { showuser } from '../state/action-creator';
+import { useDispatch, useSelector } from 'react-redux';
+import { loaduser, showuser } from "../state/action-creator";
 
-function C1({p}) {
-     const dispatch = useDispatch();
-     const name=useSelector((state)=> state.user_authReducer)
-     useEffect(() => {
-      dispatch(showuser())
-     }, [dispatch])
-     console.log(name);
+export default function C1() {
+    const dispatch = useDispatch();
+    const {users} = useSelector((state) => state.user_authReducer);
+    console.log("//////////////////");
+    console.log(users);
+    //const alluser=userList.users[0];
+    useEffect(() => {
+      dispatch(showuser());
+    }, [dispatch]);
   return (
-    <div>C1</div>
+    <div>
+      <h1>C1</h1>
+    {users.map(x=>{
+      return <h5>{x.username}</h5>
+    })}
+       
+    </div>
+    
   )
 }
-
-// const mapStateToProps = (state, ownProps) => {
-//     return {
-//         p: state
-//     }
-// }
-export default C1 
