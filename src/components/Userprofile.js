@@ -4,7 +4,7 @@ import {showuser} from '../state/action-creator'
 export default function Userprofile() {
 
   const loginuserData = useSelector((state) => state.user_authReducer);
-  console.log(loginuserData.profile);
+  //console.log(loginuserData);
   //const userdata=loginuserData.profile.data
 
   const dispatch = useDispatch();
@@ -14,6 +14,8 @@ export default function Userprofile() {
   return (
     <div className='p-5 mt-5'>
         <h1>Userprofile </h1>
+        {loginuserData && loginuserData.firstname}
+        <p className='text-primary'> {loginuserData && loginuserData.email}</p>
         {/* <div class="card text-white bg-primary">
           <img class="card-img-top" src="holder.js/100px180/" alt="" />
           <div class="card-body">
@@ -23,6 +25,10 @@ export default function Userprofile() {
             
           </div>
         </div> */}
+
+        {loginuserData.cart_item && loginuserData.cart_item.map(x=>{
+          return <li>{x.price}</li>
+        })}
     </div>
   )
 }

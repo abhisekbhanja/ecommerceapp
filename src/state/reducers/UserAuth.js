@@ -19,7 +19,7 @@ const userlogReducer = (state=" " , action) => {
         return state={errmsg:action.payload,loading:false} 
       
       case SHOW_USER_PROFILE:
-        return state={profile:action.payload}
+        return state=action.payload
   
       default:
         return state;

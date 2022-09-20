@@ -50,7 +50,6 @@ export default ()=> {
           <div className="form-group">
             <input
               type="text"
-              value="tom"
               className={
                 errors.firstname ? "form-control is-invalid" : "form-control"
               }
@@ -62,7 +61,6 @@ export default ()=> {
           <div className="form-group">
             <input
               type="text"
-              value="ball"
               className={
                 errors.lastname ? "form-control is-invalid" : "form-control"
               }
@@ -74,7 +72,6 @@ export default ()=> {
           <div className="form-group">
             <input
               type="number"
-              value="9756754678"
               className={
                 errors.mobile ? "form-control is-invalid" : "form-control"
               }
@@ -89,7 +86,6 @@ export default ()=> {
           </div>
           <div className="form-group">
             <input
-            value="tomball1@gmail.com"
               type="text"
               className={
                 errors.email ? "form-control is-invalid" : "form-control"
@@ -111,7 +107,6 @@ export default ()=> {
           <div className="form-group">
             <input
               type="password"
-              value="Tomball@1234"
               className={
                 errors.password ? "form-control is-invalid" : "form-control"
               }
@@ -134,10 +129,9 @@ export default ()=> {
               className={
                 errors.cpassword ? "form-control is-invalid" : "form-control"
               }
-              // {...register('cpassword',{required: "this field is rquired",
-              // validate: value =>
-              // value === password.current || "The passwords do not match"})}
-              value="Tomball@1234"
+              {...register('cpassword',{required: "this field is rquired",
+              validate: value =>
+              value === password.current || "The passwords do not match"})}
               placeholder="Confirm your password"
             />
             <p className="text-danger">{errors.cpassword?.message}</p>

@@ -85,7 +85,7 @@ export const showuser = (signupData) => async (dispatch) =>{
        }
       )
       //console.log(alldata.data);
-      dispatch({type:SHOW_USER_PROFILE,payload:alldata.data})
+      dispatch({type:SHOW_USER_PROFILE,payload:alldata.data.data})
   } catch (error) {
     
   }

@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { productsContext } from "../ProductState/productsContext";
+import { showuser } from "../state/action-creator";
 import "../stylesheet/cart.css";
 import useMyhook from "./useMyhook";
 
@@ -13,25 +14,25 @@ export default function Navbar() {
   const [user, setuser] = useState();
   let navigate=useNavigate();
   //custom hook
-  const data = useMyhook();
-  useEffect(() => {
-    if(data){
-      //console.log(data.firstname);
-        setuser(data.firstname)
-    }
- 
-    
-  }, [data])
+
   
   //localStorage.setItem('userid',data._id)
   // const l=data.cart_item.length
  //console.log(data.__v)
 
-  const logout = () => {
-    //console.log("logout...........");
+ const loginuserData = useSelector((state) => state.user_authReducer);
+ //console.log(loginuserData);
+ //const userdata=loginuserData.profile.data
+
+ const dispatch = useDispatch();
+ useEffect(() => {
+   dispatch(showuser());
+ }, [loginuserData]);
+console.log(loginuserData.firstname);
+  
+const logout = () => {
     localStorage.removeItem("loginusertoken");
-    // window.reload();
-    window.location.reload(false);
+    navigate("/login")
   };
 
   return (
@@ -42,24 +43,31 @@ export default function Navbar() {
         </Link>
 
         <div className="dropdown ml-auto">
-          {data?<div>
-            <button className="btn btn-secondary dropdown-toggle" 
-                     type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
-                      <i className="fa fa-user" aria-hidden="true"></i> {data?user:""}
-                     </button>
-                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                       <a className="dropdown-item logout" onClick={logout}>Logout</a>
-                     </div>
-          </div>:
-          <Loginbtn />}
+        {loginuserData.firstname==undefined? 
+        <Loginbtn /> :
+        <div>
+        <button className="btn btn-secondary dropdown-toggle" 
+                 type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <i className="fa fa-user" aria-hidden="true"></i> 
+                  {loginuserData.firstname==undefined? " ": loginuserData.firstname}
+                 </button>
+                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                   <a className="dropdown-item logout" onClick={logout}>Logout</a>
+                 </div>
+      </div>}
+          
         </div>
+   
 
-       {data? <Link className="nav-link text-warning" to="/cart">
+
+
+
+       {loginuserData==undefined? " ":<Link className="nav-link text-warning" to="/cart">
           
           <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-          cart ({data?data.cart_item.length:0})
-        </Link>:" "}
+          cart ({loginuserData.cart_item?loginuserData.cart_item.length:0})
+        </Link>}
       </nav>
     </div>
   );

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from 'react-router-dom'
 import { Link } from "react-router-dom";
 import { productsContext } from "../ProductState/productsContext";
-import { incquantity, decquantity } from "../state/action-creator";
+import { incquantity, decquantity, showuser } from "../state/action-creator";
 import "../style.css";
 import axios from 'axios'
 
@@ -98,7 +98,16 @@ useEffect(() => {
   
 }, [user])
 
+///////////////
+const loginuserData = useSelector((state) => state.user_authReducer);
+console.log(loginuserData.cart_item);
+console.log("cart item");
+//const userdata=loginuserData.profile.data
 
+
+useEffect(() => {
+  dispatch(showuser());
+}, [dispatch]);
 
 
 
@@ -127,8 +136,8 @@ const dec = (q2,userid,product_price) => {
             </button>
           </Link>
          
-           {user?  
-            user.cart_item.map(x=>{
+           {loginuserData.cart_item &&  
+            loginuserData.cart_item.map(x=>{
                 return<div  className="card m-2 p-4" key={x.id}>
                 <div className="row">
                   <div className="col-6">
@@ -140,7 +149,7 @@ const dec = (q2,userid,product_price) => {
                     <p className="product-name">{x.title}</p>
                     <button
                       className="btn btn-info btn-sm quantity-btn"
-                      onClick={() => inc(x.id,user._id)}
+                      onClick={() => inc(x.id,loginuserData._id)}
                     >
                       +
                     </button>
@@ -153,7 +162,7 @@ const dec = (q2,userid,product_price) => {
                     {x.quantity===1?" ":
                       <button
                       className="btn btn-info btn-sm quantity-btn"
-                      onClick={() => dec(x.id,user._id,x.price)}
+                      onClick={() => dec(x.id,loginuserData._id,x.price)}
                     >
                       -
                     </button>}
@@ -173,8 +182,7 @@ const dec = (q2,userid,product_price) => {
                   </div>
                 </div>
               </div>
-              }):
-              ""
+              })
               }
           
           
