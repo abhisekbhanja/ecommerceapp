@@ -18,8 +18,14 @@ const userlogReducer = (state=" " , action) => {
       case EXIST_USER:
         return state={errmsg:action.payload,loading:false} 
       
-      case SHOW_USER_PROFILE:
-        return state=action.payload
+        case SHOW_USER_PROFILE:
+          const token=localStorage.getItem("loginusertoken")
+          if(token==null){
+            return state=" "
+          }
+          else{
+            return state=action.payload
+          }
   
       default:
         return state;
