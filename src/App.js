@@ -90,22 +90,8 @@ function App() {
       <div className="App">
         <Navbar />
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <Products
-                loading={loading}
-                data={data}
-                addproduct={addProduct}
-                getcatagory={getcatagory}
-                setFilter={setFilter}
-                low={low}
-                high={high}
-              />
-            }
-          />
-          <Route
+        <Route exact path="/"element={<Products />}/>
+          {/* <Route
             exact
             path="/cart"
             element={<Cart removeproduct={removeProduct} />}
@@ -120,7 +106,7 @@ function App() {
           <Route exact path="/success" element={<Success />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/profile" element={<Userprofile />} />
+          <Route exact path="/profile" element={<Userprofile />} /> */}
         </Routes>
       </div>
     </Router>

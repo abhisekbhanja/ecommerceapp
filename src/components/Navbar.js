@@ -28,7 +28,7 @@ export default function Navbar() {
  useEffect(() => {
    dispatch(showuser());
  }, [loginuserData]);
-console.log(loginuserData.firstname);
+//console.log(loginuserData.firstname);
   
 const logout = () => {
     localStorage.removeItem("loginusertoken");

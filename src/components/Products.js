@@ -1,9 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "../stylesheet/cart.css";
 import { Link } from "react-router-dom";
 import "../style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { showproducts } from "../state/action-creator";
 
 export default function Products({
   data,
@@ -14,7 +16,13 @@ export default function Products({
   low,
   high
 }) {
-  //
+  //////////////////
+  const products = useSelector((state) => state.showproductReducer);
+  const dispatch = useDispatch();
+  console.log(products);
+ useEffect(() => {
+   dispatch(showproducts());
+ }, [dispatch]);
 
   return (
     <div>
@@ -56,31 +64,31 @@ export default function Products({
         <div className="btns d-block m-auto text-center">
           <button
             className="btn btn-outline-secondary category-btn"
-            onClick={() => setFilter()}
+            //onClick={() => setFilter()}
           >
             All
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => getcatagory("men's clothing")}
+            //onClick={() => getcatagory("men's clothing")}
           >
             Men's clothing
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => getcatagory("women's clothing")}
+            //onClick={() => getcatagory("women's clothing")}
           >
             Women's clothing
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => getcatagory("jewelery")}
+            //onClick={() => getcatagory("jewelery")}
           >
             Jewellary
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => getcatagory("electronics")}
+            //onClick={() => getcatagory("electronics")}
           >
             Electronics
           </button>
@@ -90,53 +98,54 @@ export default function Products({
                   sort by
                 </button>
             <div className="dropdown-menu" aria-labelledby="triggerId">
-              <button className="dropdown-item" onClick={low}>low to high</button>
-              <button className="dropdown-item" onClick={high}>high to low</button>
+              <button className="dropdown-item" 
+              >low to high</button>
+              <button className="dropdown-item" >high to low</button>
             </div>
         
         </div>
 
-        {loading ? (
+      
           <div>
-            <Loading />
+            {/* <Loading /> */}
           </div>
-        ) : (
+        
           <div className="row">
-            {data.map((x) => {
-              return (
-                <div className="col-6 col-lg-3" key={x.id}>
-                  <div className="card product_card text-center mt-4 p-2">
-                    <img src={x.image} />
-                    <div className="card-body">
-                      <p className="card-title productlist_text">{x.title}</p>
-                      <p className="card-text productlist_text">{x.price} $</p>
-                      <p className="productlist_text">
-                        Rating: {x.rating.rate}
-                      </p>
-                      <div className="d-flex flex-column">
-                        <button
-                          className="btn btn-primary btn-sm products_btn"
-                          onClick={() =>
-                            addproduct(x.title, x.image, x.price, x.id)
-                          }
-                        >
-                          add to cart
-                        </button>
+        
+               {products.map((x)=>{
+                return  <div className="col-6 col-lg-3" key={x.id}>
+                <div className="card product_card text-center mt-4 p-2">
+                  <img src={x.image} />
+                  <div className="card-body">
+                    <p className="card-title productlist_text">dd{x.title}</p>
+                    <p className="card-text productlist_text"> ${x.price}</p>
+                    <p className="productlist_text">
+                      Rating: {x.rating.rate}
+                    </p>
+                    <div className="d-flex flex-column">
+                      <button
+                        className="btn btn-primary btn-sm products_btn"
+                        // onClick={() =>
+                        //   addproduct(x.title, x.image, x.price, x.id)
+                        // }
+                      >
+                        add to cart
+                      </button>
 
-                        <Link
-                          to={`/productdetails/${x.id}`}
-                          className="productlist_text mt-1"
-                        >
-                          details
-                        </Link>
-                      </div>
+                      <Link
+                        to={`/productdetails/`}
+                        className="productlist_text mt-1"
+                      >
+                        details
+                      </Link>
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+               })}
+            
           </div>
-        )}
+    
       </div>
     </div>
   );

@@ -90,3 +90,12 @@ export const showuser = (signupData) => async (dispatch) =>{
     
   }
 }
+
+export const showproducts = (signupData) => async (dispatch) =>{
+  try {
+    const alldata=await axios.get(process.env.REACT_APP_URL)
+      dispatch({type:"showproducts",payload:alldata.data})
+  } catch (error) {
+    
+  }
+}
