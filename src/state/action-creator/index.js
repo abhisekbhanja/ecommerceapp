@@ -22,14 +22,30 @@ export const addproduct = (title, image, price, id, email) => {
 };
 /////////////
 export const addtocart = (addedproducts) => async(dispatch) => {
-  console.log(addedproducts);
+  //console.log(addedproducts);
   try {
     const response=await axios.post(`${process.env.REACT_APP_SURL}/cartdata`,addedproducts);
-    console.log(response);
+    console.log(response.data);
   }
   catch(err){
 
   }
+};
+
+export const sortproduct = (s,allproducts) => (dispatch) => {
+  if(s==="low"){
+    const myproduct = allproducts.sort((a, b) => {
+      return a.price - b.price;
+    })
+    //console.log(myproduct);
+  }
+  else  if(s==="high"){
+    const myproduct = allproducts.sort((a, b) => {
+      return b.price - a.price;
+    })
+    //console.log(myproduct);
+  }
+
 };
 ////////////
 
@@ -109,6 +125,15 @@ export const showproducts = (signupData) => async (dispatch) =>{
   try {
     const alldata=await axios.get(process.env.REACT_APP_URL)
       dispatch({type:"showproducts",payload:alldata.data})
+  } catch (error) {
+    
+  }
+}
+
+export const showproduct_details = (id) => async (dispatch) =>{
+  try {
+     const alldata=await axios.get(`${process.env.REACT_APP_URL}/${id}`)
+    dispatch({type:"pid",payload:alldata})
   } catch (error) {
     
   }

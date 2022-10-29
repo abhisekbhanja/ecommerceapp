@@ -1,58 +1,63 @@
 import React, { useContext, useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { productsContext } from "../ProductState/productsContext";
+import { addtocart, showproduct_details } from "../state/action-creator";
 import "../style.css";
-export default function ProductDetails({ addproduct }) {
-  const carts = useContext(productsContext);
-  const [details, setdetails] = useState("");
-  //get the parameter from url use useParams hook
-  const p = useParams().id;
-  //console.log("id " + p);
-  const [productload, setproductload] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      fetchItem();
-    }, 2000);
-  }, []);
+export default function ProductDetails() {
 
-  const fetchItem = async () => {
-    const details = await fetch(`${process.env.REACT_APP_URL}/${p}`);
-    const item = await details.json();
-    setdetails(item);
-    setproductload(false);
-    //console.log(item);
-  };
+   const p = useParams().id;
+
+
+  /////////
+
+  const products_details = useSelector((state) => state.showproductReducer.product_details);
+  //console.log(products_details);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(showproduct_details(p));
+  }, [dispatch]);
+
+  
+  const loginuserData = useSelector((state) => state.user_authReducer);
+   
+  const addproducts=(title, image, price, id, email)=>{
+   const added_product={title:title,image:image,price:price,id:id,email:email}
+   //console.log(added_product);
+   dispatch(addtocart(added_product))
+  }
   return (
     <div>
       <div className="container">
         <Link to="/">
           <button className="btn btn-outline-primary mt-3">back</button>
         </Link>
-        {productload ? (
+        {!products_details ? 
           <ProductdetailsLoad />
-        ) : (
+         : 
           <div className="card details_card p-5 mt-5">
-            <img src={details.image} />
+            <img src={products_details && products_details.image} />
             <div className="card-body">
               <br></br>
               <h5 className="card-title text-warning">
-                <b>{details.title}</b>
+                <b>{products_details && products_details.title}</b>
               </h5>
-              <h5 className="card-title">Catagory: {details.category}</h5>
-              <h5 className="card-title">Description: {details.description}</h5>
+              <h5 className="card-title">Catagory: {products_details && products_details.category}</h5>
+              <h5 className="card-title">Description: {products_details && products_details.description}</h5>
               <p className="card-text text-primary">
-                <b>{details.price}rs</b>
+                <b>{products_details && products_details.price}rs</b>
               </p>
               <button
                 className="btn btn-success"
                 onClick={() =>
-                  addproduct(
-                    details.title,
-                    details.image,
-                    details.price,
-                    details.id
+                  addproducts(
+                    products_details.title,
+                    products_details.image,
+                    products_details.price,
+                    products_details.id,
+                    loginuserData.email
                   )
                 }
               >
@@ -61,7 +66,7 @@ export default function ProductDetails({ addproduct }) {
               <br />
             </div>
           </div>
-        )}
+}
       </div>
     </div>
   );

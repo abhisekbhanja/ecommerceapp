@@ -5,27 +5,20 @@ import "../stylesheet/cart.css";
 import { Link } from "react-router-dom";
 import "../style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addtocart, getcategory, showproducts, showuser } from "../state/action-creator";
+import { addtocart, getcategory, showproducts, showproduct_details, showuser, sortproduct } from "../state/action-creator";
 
-export default function Products({
-  data,
-  addproduct,
-  loading,
-  getcatagory,
-  setFilter,
-  low,
-  high
-}) {
+export default function Products() {
   //////////////////
+   //show login user info
+   const loginuserData = useSelector((state) => state.user_authReducer);
 
-  //show login user info
-  const loginuserData = useSelector((state) => state.user_authReducer);
 
  
   useEffect(() => {
     dispatch(showuser());
   }, [loginuserData]);
 
+const [showbth, setshowbth] = useState(true);
 
   const products = useSelector((state) => state.showproductReducer.products);
   const allproducts = useSelector((state) => state.showproductReducer.allproducts);
@@ -35,9 +28,20 @@ export default function Products({
    dispatch(showproducts());
  }, [dispatch]);
 
+
  const addproducts=(title, image, price, id, email)=>{
   const added_product={title:title,image:image,price:price,id:id,email:email}
   dispatch(addtocart(added_product))
+ }
+
+ const productcategory=(category,allproduct)=>{
+  setshowbth(false)
+  dispatch(getcategory(category,allproduct))
+ }
+
+ const showallproducts=()=>{
+  setshowbth(true)
+  dispatch(showproducts())
  }
 
   return (
@@ -80,44 +84,49 @@ export default function Products({
         <div className="btns d-block m-auto text-center">
           <button
             className="btn btn-outline-secondary category-btn"
-            onClick={() => dispatch(showproducts())}
+            onClick={showallproducts}
           >
             All
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => dispatch(getcategory("men's clothing",allproducts))}
+            onClick={() => productcategory("men's clothing",allproducts)}
           >
             Men's clothing
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => dispatch(getcategory("women's clothing",allproducts))}
+            onClick={() => productcategory("women's clothing",allproducts)}
           >
             Women's clothing
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => dispatch(getcategory("jewelery",allproducts))}
+            onClick={() => productcategory("jewelery",allproducts)}
           >
             Jewellary
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => dispatch(getcategory("electronics",allproducts))}
+            onClick={() => productcategory("electronics",allproducts)}
           >
             Electronics
           </button>
          
+           {showbth===true?<span>
             <button className="btn btn-secondary ml-2 dropdown-toggle category-btn" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                   sort by
                 </button>
             <div className="dropdown-menu" aria-labelledby="triggerId">
-              <button className="dropdown-item" 
+              <button className="dropdown-item"
+              onClick={()=>dispatch(sortproduct("low",allproducts))}
               >low to high</button>
-              <button className="dropdown-item" >high to low</button>
+              <button className="dropdown-item"
+              onClick={()=>dispatch(sortproduct("high",allproducts))}
+               >high to low</button>
             </div>
+           </span>:" "}
         
         </div>
 
@@ -149,7 +158,7 @@ export default function Products({
                       </button>
 
                       <Link
-                        to={`/productdetails/`}
+                        to={`/productdetails/${x.id}`}
                         className="productlist_text mt-1"
                       >
                         details
