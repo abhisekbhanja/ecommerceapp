@@ -5,7 +5,7 @@ import "../stylesheet/cart.css";
 import { Link } from "react-router-dom";
 import "../style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { showproducts } from "../state/action-creator";
+import { addtocart, getcategory, showproducts, showuser } from "../state/action-creator";
 
 export default function Products({
   data,
@@ -17,12 +17,28 @@ export default function Products({
   high
 }) {
   //////////////////
-  const products = useSelector((state) => state.showproductReducer);
+
+  //show login user info
+  const loginuserData = useSelector((state) => state.user_authReducer);
+
+ 
+  useEffect(() => {
+    dispatch(showuser());
+  }, [loginuserData]);
+
+
+  const products = useSelector((state) => state.showproductReducer.products);
+  const allproducts = useSelector((state) => state.showproductReducer.allproducts);
   const dispatch = useDispatch();
-  console.log(products);
+  //console.log(allproducts);
  useEffect(() => {
    dispatch(showproducts());
  }, [dispatch]);
+
+ const addproducts=(title, image, price, id, email)=>{
+  const added_product={title:title,image:image,price:price,id:id,email:email}
+  dispatch(addtocart(added_product))
+ }
 
   return (
     <div>
@@ -64,31 +80,31 @@ export default function Products({
         <div className="btns d-block m-auto text-center">
           <button
             className="btn btn-outline-secondary category-btn"
-            //onClick={() => setFilter()}
+            onClick={() => dispatch(showproducts())}
           >
             All
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            //onClick={() => getcatagory("men's clothing")}
+            onClick={() => dispatch(getcategory("men's clothing",allproducts))}
           >
             Men's clothing
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            //onClick={() => getcatagory("women's clothing")}
+            onClick={() => dispatch(getcategory("women's clothing",allproducts))}
           >
             Women's clothing
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            //onClick={() => getcatagory("jewelery")}
+            onClick={() => dispatch(getcategory("jewelery",allproducts))}
           >
             Jewellary
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            //onClick={() => getcatagory("electronics")}
+            onClick={() => dispatch(getcategory("electronics",allproducts))}
           >
             Electronics
           </button>
@@ -112,7 +128,7 @@ export default function Products({
         
           <div className="row">
         
-               {products.map((x)=>{
+               {products && products.map((x)=>{
                 return  <div className="col-6 col-lg-3" key={x.id}>
                 <div className="card product_card text-center mt-4 p-2">
                   <img src={x.image} />
@@ -125,9 +141,9 @@ export default function Products({
                     <div className="d-flex flex-column">
                       <button
                         className="btn btn-primary btn-sm products_btn"
-                        // onClick={() =>
-                        //   addproduct(x.title, x.image, x.price, x.id)
-                        // }
+                        onClick={() =>
+                         addproducts(x.title, x.image, x.price, x.id,loginuserData.email)
+                        }
                       >
                         add to cart
                       </button>

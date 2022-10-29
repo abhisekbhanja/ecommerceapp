@@ -1,6 +1,8 @@
 import axios from "axios";
 import {
+  ADD_TO_CART,
   EXIST_USER,
+  GET_CATEGORY,
   SHOW_USER_PROFILE,
   USERLOGIN_FAILED,
   USER_LOGIN,
@@ -18,6 +20,18 @@ export const addproduct = (title, image, price, id, email) => {
     email: email,
   };
 };
+/////////////
+export const addtocart = (addedproducts) => async(dispatch) => {
+  console.log(addedproducts);
+  try {
+    const response=await axios.post(`${process.env.REACT_APP_SURL}/cartdata`,addedproducts);
+    console.log(response);
+  }
+  catch(err){
+
+  }
+};
+////////////
 
 export const removeproduct = (q3, userid) => {
   return {
@@ -99,3 +113,14 @@ export const showproducts = (signupData) => async (dispatch) =>{
     
   }
 }
+
+export const getcategory = (category,allproducts) => (dispatch) => {
+  //console.log(allproducts);
+  dispatch({
+    type: GET_CATEGORY,
+    payload: {
+      product_category:category,
+      allproducts:allproducts.filter((x)=>x.category===category)
+    },
+  });
+};

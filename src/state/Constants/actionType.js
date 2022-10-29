@@ -8,6 +8,7 @@ export const USERLOGIN_FAILED="LOGIN FAILED"
 
 
 export const SHOW_USER_PROFILE="SHOW USER PROFILE"
-
+export const GET_CATEGORY="get category"
+export const ADD_TO_CART="add to cart"
 
 
