@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "../stylesheet/cart.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addtocart, getcategory, showproducts, showproduct_details, showuser, sortproduct } from "../state/action-creator";
@@ -28,10 +28,15 @@ const [showbth, setshowbth] = useState(true);
    dispatch(showproducts());
  }, [dispatch]);
 
-
+const navigate=useNavigate()
  const addproducts=(title, image, price, id, email)=>{
+  if(email===undefined){
+    navigate("/login")
+  }
+ else{
   const added_product={title:title,image:image,price:price,id:id,email:email}
   dispatch(addtocart(added_product))
+ }
  }
 
  const productcategory=(category,allproduct)=>{

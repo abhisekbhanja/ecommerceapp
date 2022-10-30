@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { productsContext } from "../ProductState/productsContext";
 import { addtocart, showproduct_details } from "../state/action-creator";
 import "../style.css";
@@ -23,10 +23,16 @@ export default function ProductDetails() {
   
   const loginuserData = useSelector((state) => state.user_authReducer);
    
+  const navigate=useNavigate()
   const addproducts=(title, image, price, id, email)=>{
-   const added_product={title:title,image:image,price:price,id:id,email:email}
+    if(email===undefined){
+      navigate("/login")
+    }
+   else{
+    const added_product={title:title,image:image,price:price,id:id,email:email}
    //console.log(added_product);
    dispatch(addtocart(added_product))
+   }
   }
   return (
     <div>
