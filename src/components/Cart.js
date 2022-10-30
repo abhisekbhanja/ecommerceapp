@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from 'react-router-dom'
 import { Link } from "react-router-dom";
 import { productsContext } from "../ProductState/productsContext";
-import { incquantity, decquantity, showuser } from "../state/action-creator";
+import { incquantity, decquantity, showuser, increase_quantity, decrease_quantity, remove_product } from "../state/action-creator";
 import "../style.css";
 import axios from 'axios'
 
@@ -19,14 +19,7 @@ export default function Cart({ removeproduct }) {
   const dispatch = useDispatch();
 const [total, settotal] = useState(0)
 const [size, setsize] = useState(0)
-  // const inc = (q1) => {
-  //   dispatch(incquantity(q1));
-  // };
 
-  // const dec = (q2) => {
-  //   dispatch(decquantity(q2));
-  // };
-  /////////////////
   
  
  
@@ -36,7 +29,7 @@ const [size, setsize] = useState(0)
   /////////////////
 const buynow=(total)=>{
  
-  if(user.firstname==""){
+  if(loginuserData.firstname==""){
     navigate("/login")
   }
   else{
@@ -58,9 +51,9 @@ const buynow=(total)=>{
         navigate("/success");
     },
     "prefill": {
-        "name": user.firstname,
-        "email": user.email,
-        "contact": user.mobile
+        "name": loginuserData.firstname,
+        "email": loginuserData.email,
+        "contact": loginuserData.mobile
     },
     "notes": {
         "address": "Razorpay Corporate Office"
@@ -83,42 +76,22 @@ const buynow=(total)=>{
 
 
 }
-const user = useMyhook();
-//console.log(user.cart_item);
 
-useEffect(() => {
-  if(user){
-    var sum = 0;
-    user.cart_item.map(x=>{sum=sum+x.incPrice
-    settotal(sum)
 
-    })
-
-  }
-  
-}, [user])
 
 ///////////////
 const loginuserData = useSelector((state) => state.user_authReducer);
-console.log(loginuserData.cart_item);
-console.log("cart item");
+//console.log(loginuserData.cart_item);
+// console.log("cart item");
 //const userdata=loginuserData.profile.data
+const cart_item=loginuserData.cart_item
+let sum=0
+ cart_item &&  cart_item.map(x=>{sum=sum+x.incPrice})
 
 
 useEffect(() => {
   dispatch(showuser());
 }, [dispatch]);
-
-
-
-const inc = (q1,userid) => {
-  dispatch(incquantity(q1,userid));
-};
-
-const dec = (q2,userid,product_price) => {
-  dispatch(decquantity(q2,userid,product_price));
-};
-
 
 
   return (
@@ -149,7 +122,7 @@ const dec = (q2,userid,product_price) => {
                     <p className="product-name">{x.title}</p>
                     <button
                       className="btn btn-info btn-sm quantity-btn"
-                      onClick={() => inc(x.id,loginuserData._id)}
+                      onClick={() => dispatch(increase_quantity(x.id,loginuserData._id))}
                     >
                       +
                     </button>
@@ -162,7 +135,7 @@ const dec = (q2,userid,product_price) => {
                     {x.quantity===1?" ":
                       <button
                       className="btn btn-info btn-sm quantity-btn"
-                      onClick={() => dec(x.id,loginuserData._id,x.price)}
+                      onClick={() => dispatch(decrease_quantity(x.id,loginuserData._id))}
                     >
                       -
                     </button>}
@@ -175,7 +148,7 @@ const dec = (q2,userid,product_price) => {
                     <br></br>
                     <button
                       className="btn btn-danger btn-sm remove-btn"
-                      onClick={() => removeproduct(x.id,user._id)}
+                      onClick={() => dispatch(remove_product(x.id,loginuserData._id))}
                     >
                       remove
                     </button>
@@ -187,9 +160,9 @@ const dec = (q2,userid,product_price) => {
           
           
           <div className="ck d-block m-auto text-center">
-            <h5> Total : {total}$</h5>
+            <h5> Total :{Math.round(sum)} $</h5>
             <button
-              onClick={()=>buynow(total)}
+              onClick={()=>buynow(Math.round(sum))}
               className="btn btn-outline-secondary font-weight-bold"
             >
               proceed to check out

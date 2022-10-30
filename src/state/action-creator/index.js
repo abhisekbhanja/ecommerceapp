@@ -21,6 +21,7 @@ export const addproduct = (title, image, price, id, email) => {
   };
 };
 /////////////
+//add to cart action
 export const addtocart = (addedproducts) => async(dispatch) => {
   //console.log(addedproducts);
   try {
@@ -32,6 +33,7 @@ export const addtocart = (addedproducts) => async(dispatch) => {
   }
 };
 
+//sort product
 export const sortproduct = (s,allproducts) => (dispatch) => {
   if(s==="low"){
     const myproduct = allproducts.sort((a, b) => {
@@ -49,28 +51,36 @@ export const sortproduct = (s,allproducts) => (dispatch) => {
 };
 ////////////
 
-export const removeproduct = (q3, userid) => {
-  return {
-    type: "delete_item",
-    q3: q3,
-    userid: userid,
-  };
+export const remove_product = (product_id,_id) => async(dispatch) =>{
+  // console.log(product_id,_id);
+  try {
+    const response=await axios.put(`${process.env.REACT_APP_SURL}/delete`,{_id:_id,id:product_id});
+    console.log(response.data);
+  }
+  catch(err){
+    console.log(err);
+  }
 };
 
-export const incquantity = (q1, userid) => {
-  return {
-    type: "in",
-    q1: q1,
-    userid: userid,
-  };
+export const increase_quantity = (product_id,_id) => async(dispatch) =>{
+  // console.log(product_id,_id);
+  try {
+    const response=await axios.put(`${process.env.REACT_APP_SURL}/increase`,{_id:_id,id:product_id});
+    // console.log(response.data);
+  }
+  catch(err){
+
+  }
 };
-export const decquantity = (q2, userid, product_price) => {
-  return {
-    type: "dc",
-    q2: q2,
-    userid: userid,
-    product_price: product_price,
-  };
+export const decrease_quantity = (product_id,_id) => async(dispatch) =>{
+  // console.log(product_id,_id);
+  try {
+    const response=await axios.put(`${process.env.REACT_APP_SURL}/decrease`,{_id:_id,id:product_id});
+    // console.log(response.data);
+  }
+  catch(err){
+    console.log(err);
+  }
 };
 
 export const loginuser = (loginData) => async (dispatch) => {
