@@ -10,16 +10,16 @@ import {
   USER_SIGNUP_SUCCESS,
 } from "../Constants/actionType";
 
-export const addproduct = (title, image, price, id, email) => {
-  return {
-    type: "add",
-    title: title,
-    image: image,
-    price: price,
-    id: id,
-    email: email,
-  };
-};
+// export const addproduct = (title, image, price, id, email) => {
+//   return {
+//     type: "add",
+//     title: title,
+//     image: image,
+//     price: price,
+//     id: id,
+//     email: email,
+//   };
+// };
 /////////////
 //add to cart action
 export const addtocart = (addedproducts) => async(dispatch) => {

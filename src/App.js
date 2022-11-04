@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Notfound from "./components/Notfound";
 import ProductDetails from "./components/ProductDetails";
 import Products from "./components/Products";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./components/Signup";
 import Success from "./components/Success";
 import useMyhook from "./components/useMyhook";
@@ -39,12 +40,14 @@ function App() {
             element={<ProductDetails />}
           />
           
-          <Route exact path="/checkout" element={<Checkout />} />
+          <Route exact path="/checkout" element={
+            <ProtectedRoute><Checkout /></ProtectedRoute>
+          } />
           <Route exact path="*" element={<Notfound />} />
-          <Route exact path="/success" element={<Success />} />
+          <Route exact path="/success" element={<ProtectedRoute><Success /></ProtectedRoute>} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/profile" element={<Userprofile />} />
+          <Route exact path="/profile" element={<ProtectedRoute><Userprofile /></ProtectedRoute>} />
         </Routes>
       </div>
     </Router>

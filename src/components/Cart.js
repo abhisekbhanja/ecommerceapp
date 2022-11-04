@@ -75,13 +75,13 @@ const buynow=(total)=>{
 
 ///////////////
 const loginuserData = useSelector((state) => state.user_authReducer);
-console.log(loginuserData);
+//console.log(loginuserData);
 if(loginuserData===" "){
-  console.log("no");
+  //console.log("no");
   navigate("/login")
 }
 else{
-  console.log("yes");
+  //console.log("yes");
 }
 // console.log("cart item");
 //const userdata=loginuserData.profile.data
@@ -162,7 +162,7 @@ useEffect(() => {
         
         
         <div className="ck d-block m-auto text-center">
-          <h5> Total :{Math.round(sum)==0} $</h5>
+          <h5> Total :{Math.round(sum)} $</h5>
           <button
             onClick={()=>buynow(Math.round(sum))}
             className="btn btn-outline-secondary font-weight-bold"
@@ -170,8 +170,9 @@ useEffect(() => {
             proceed to check out
           </button>
         </div>
-      </div>:<div className="text-center mt-5 pt-5">
-        <h1>Please login for add to cart</h1>
+      </div>
+      :<div className="text-center mt-5 pt-5">
+        <img src="https://www.seekpng.com/png/detail/117-1170538_404-your-cart-is-empty.png" />
         </div>}
       
     </div>
