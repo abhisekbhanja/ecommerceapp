@@ -3,6 +3,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { productsContext } from "../ProductState/productsContext";
 import { addtocart, showproduct_details } from "../state/action-creator";
 import "../style.css";
@@ -25,6 +26,7 @@ export default function ProductDetails() {
    
   const navigate=useNavigate()
   const addproducts=(title, image, price, id, email)=>{
+   
     if(email===undefined){
       navigate("/login")
     }
@@ -32,6 +34,7 @@ export default function ProductDetails() {
     const added_product={title:title,image:image,price:price,id:id,email:email}
    //console.log(added_product);
    dispatch(addtocart(added_product))
+   toast.success("added to cart");
    }
   }
   return (
@@ -69,6 +72,18 @@ export default function ProductDetails() {
               >
                 add to cart
               </button>
+              <ToastContainer
+position="top-center"
+autoClose={1000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
               <br />
             </div>
           </div>

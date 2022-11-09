@@ -22,9 +22,11 @@ export default function Login() {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-    const onSubmit=(data)=>{
+    const onSubmit=(data,e)=>{
        //console.log("componet click is working")
+       
       dispatch(loginuser(data))
+      e.target.reset();
     }
   return (
     <div className='mt-5 p-5 signup_page'>
@@ -54,6 +56,7 @@ export default function Login() {
         </div>
         <p className="text-success">{loginuserData.msg}</p>
         <p className='text-danger'>{loginuserData.loginmsg}</p>
+        {/* <p className='text-danger'>{loginuserData.networkerr}</p> */}
         <p>create an account? <Link to='/signup'>click here</Link></p>
        
        </form>

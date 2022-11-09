@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addtocart, getcategory, showproducts, showproduct_details, showuser, sortproduct } from "../state/action-creator";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Products() {
   //////////////////
@@ -30,12 +32,14 @@ const [showbth, setshowbth] = useState(true);
 
 const navigate=useNavigate()
  const addproducts=(title, image, price, id, email)=>{
+ 
   if(email===undefined){
     navigate("/login")
   }
  else{
   const added_product={title:title,image:image,price:price,id:id,email:email}
   dispatch(addtocart(added_product))
+  toast.success("added to cart");
  }
  }
 
@@ -140,41 +144,53 @@ const navigate=useNavigate()
             {/* <Loading /> */}
           </div>
         
+          {products?
           <div className="row">
         
-               {products && products.map((x)=>{
-                return  <div className="col-6 col-lg-3" key={x.id}>
-                <div className="card product_card text-center mt-4 p-2">
-                  <img src={x.image} />
-                  <div className="card-body">
-                    <p className="card-title productlist_text">dd{x.title}</p>
-                    <p className="card-text productlist_text"> ${x.price}</p>
-                    <p className="productlist_text">
-                      Rating: {x.rating.rate}
-                    </p>
-                    <div className="d-flex flex-column">
-                      <button
-                        className="btn btn-primary btn-sm products_btn"
-                        onClick={() =>
-                         addproducts(x.title, x.image, x.price, x.id,loginuserData.email)
-                        }
-                      >
-                        add to cart
-                      </button>
-
-                      <Link
-                        to={`/productdetails/${x.id}`}
-                        className="productlist_text mt-1"
-                      >
-                        details
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-               })}
-            
-          </div>
+          {products && products.map((x)=>{
+           return  <div className="col-6 col-lg-3" key={x.id}>
+           <div className="card product_card text-center mt-4 p-2">
+             <img src={x.image} />
+             <div className="card-body">
+               <p className="card-title productlist_text">dd{x.title}</p>
+               <p className="card-text productlist_text"> ${x.price}</p>
+               <p className="productlist_text">
+                 Rating: {x.rating.rate}
+               </p>
+               <div className="d-flex flex-column">
+                 <button
+                   className="btn btn-primary btn-sm products_btn"
+                   onClick={() =>
+                    addproducts(x.title, x.image, x.price, x.id,loginuserData.email)
+                   }
+                 >
+                   add to cart
+                 </button>
+                 <ToastContainer
+position="top-center"
+autoClose={1000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
+                 <Link
+                   to={`/productdetails/${x.id}`}
+                   className="productlist_text mt-1"
+                 >
+                   details
+                 </Link>
+               </div>
+             </div>
+           </div>
+         </div>
+          })}
+       
+     </div>:<Loading />}
     
       </div>
     </div>

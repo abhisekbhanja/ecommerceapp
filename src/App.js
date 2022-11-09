@@ -44,7 +44,7 @@ function App() {
             <ProtectedRoute><Checkout /></ProtectedRoute>
           } />
           <Route exact path="*" element={<Notfound />} />
-          <Route exact path="/success" element={<ProtectedRoute><Success /></ProtectedRoute>} />
+          <Route exact path="/success" element={<Success />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/profile" element={<ProtectedRoute><Userprofile /></ProtectedRoute>} />
