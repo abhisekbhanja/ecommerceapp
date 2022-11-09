@@ -39,7 +39,7 @@ const logout = () => {
     <div>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
         <Link to="/" className="navbar-brand" href="#">
-          Ecart5 (testing)
+          Ecart5 (design change)
         </Link>
 
         <div className="dropdown ml-auto">
