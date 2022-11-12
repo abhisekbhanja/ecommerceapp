@@ -27,7 +27,7 @@ export default function Navbar() {
  const dispatch = useDispatch();
  useEffect(() => {
    dispatch(showuser());
- }, [loginuserData]);
+ }, [loginuserData.cart_item]);
 //console.log(loginuserData.firstname);
   
 const logout = () => {

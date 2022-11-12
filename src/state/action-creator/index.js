@@ -93,7 +93,7 @@ export const loginuser = (loginData) => async (dispatch) => {
   }
   catch(err)
   {
-    dispatch({type:USERLOGIN_FAILED,payload:err.response.data})
+    dispatch({type:USERLOGIN_FAILED,payload:err.message})
   }
 };
 
@@ -116,6 +116,7 @@ export const signupuser = (signupData) => async (dispatch) => {
 };
 
 export const showuser = (signupData) => async (dispatch) =>{
+  
   try {
     const alldata=await axios.get(process.env.REACT_APP_SURL,
       {
@@ -124,10 +125,10 @@ export const showuser = (signupData) => async (dispatch) =>{
          }
        }
       )
-      //console.log(alldata.data);
+    
       dispatch({type:SHOW_USER_PROFILE,payload:alldata.data.data})
   } catch (error) {
-    
+    console.log(error.message);
   }
 }
 

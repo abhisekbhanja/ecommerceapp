@@ -18,7 +18,7 @@ export default function Products() {
  
   useEffect(() => {
     dispatch(showuser());
-  }, [loginuserData]);
+  }, [loginuserData.firtname]);
 
 const [showbth, setshowbth] = useState(true);
 

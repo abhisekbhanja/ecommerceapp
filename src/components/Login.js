@@ -55,7 +55,7 @@ export default function Login() {
           <input type="submit" className='btn btn-success' value="login" />
         </div>
         <p className="text-success">{loginuserData.msg}</p>
-        <p className='text-danger'>{loginuserData.loginmsg}</p>
+        <p className='text-danger'>{loginuserData.loginmsg==="Request failed with status code 401"?"invalid credentials":loginuserData.loginmsg}</p>
         {/* <p className='text-danger'>{loginuserData.networkerr}</p> */}
         <p>create an account? <Link to='/signup'>click here</Link></p>
        
