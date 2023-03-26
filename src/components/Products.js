@@ -4,17 +4,12 @@ import "react-loading-skeleton/dist/skeleton.css";
 import "../stylesheet/cart.css";
 import { Link } from "react-router-dom";
 import "../style.css";
+import { useGetAllproductsQuery } from "../all api/userapi";
 
-export default function Products({
-  data,
-  addproduct,
-  loading,
-  getcatagory,
-  setFilter,
-  low,
-  high
-}) {
-  //
+export default function Products() {
+  //redux toolkit query code
+  const {data,isLoading}=useGetAllproductsQuery()
+  //console.log(data);
 
   return (
     <div>
@@ -53,7 +48,7 @@ export default function Products({
         <h3 className="p-4 text-center mt-2">Latest Products</h3>
         <hr></hr>
 
-        <div className="btns d-block m-auto text-center">
+        {/* <div className="btns d-block m-auto text-center">
           <button
             className="btn btn-outline-secondary category-btn"
             onClick={() => setFilter()}
@@ -94,15 +89,15 @@ export default function Products({
               <button className="dropdown-item" onClick={high}>high to low</button>
             </div>
         
-        </div>
+        </div> */}
 
-        {loading ? (
+        {isLoading ? (
           <div>
             <Loading />
           </div>
         ) : (
           <div className="row">
-            {data.map((x) => {
+            {data && data.map((x) => {
               return (
                 <div className="col-6 col-lg-3" key={x.id}>
                   <div className="card product_card text-center mt-4 p-2">
@@ -114,14 +109,14 @@ export default function Products({
                         Rating: {x.rating.rate}
                       </p>
                       <div className="d-flex flex-column">
-                        <button
+                        {/* <button
                           className="btn btn-primary btn-sm products_btn"
                           onClick={() =>
                             addproduct(x.title, x.image, x.price, x.id)
                           }
                         >
                           add to cart
-                        </button>
+                        </button> */}
 
                         <Link
                           to={`/productdetails/${x.id}`}

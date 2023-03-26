@@ -104,11 +104,11 @@ function App() {
               />
             }
           />
-          <Route
+          {/* <Route
             exact
             path="/cart"
             element={<Cart removeproduct={removeProduct} />}
-          />
+          /> */}
           <Route
             exact
             path="/productdetails/:id"

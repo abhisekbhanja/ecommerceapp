@@ -6,17 +6,12 @@ import reportWebVitals from './reportWebVitals';
 
 
 //for store
-import { createStore } from 'redux';
-import allreducers from './state/reducers/index';
+
 import { Provider } from 'react-redux';
+import { store } from './store';
 
 
-//for store
-const store = createStore(
-  allreducers,
-    {},
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+
 
 
 ReactDOM.render(
