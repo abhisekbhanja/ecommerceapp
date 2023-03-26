@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useLoginUserMutation } from '../all api/userAuthapi';
 import { loginuser } from '../state/action-creator';
 
 export default function Login() {
@@ -11,42 +12,19 @@ export default function Login() {
     const [loginerrmsg, setloginerrmsg] = useState("");
     const [S, setS] = useState("");
 
-    let navigate=useNavigate();
-    //USE THE DISPATCH
-  const dispatch = useDispatch();
-
-  const loginuserData = useSelector((state) => state.user_authReducer);
- 
-
-  const showstore=async()=>{
-     const datashow=await loginuserData
-     if(datashow=="login successfully"){
-      setloginerrmsg(datashow)
-      setS("alert alert-success")
-      navigate("/")
-      window.location.reload()
-     }
-     else if(datashow=="invalid credentials"){
-      setloginerrmsg(datashow)
-      setS("alert alert-danger")
-     }
-
-   
     
-  }
- useEffect(() => {
-  showstore()
- })
- 
-  
-  
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
-    const onSubmit=(data)=>{
-       //console.log("componet click is working")
-      dispatch(loginuser(data))
+    const [LoginUser,responseInfo]=useLoginUserMutation()
+    console.log(responseInfo);
+   const [err_msg, seterr_msg] = useState("")
+    const onSubmit=(data)=>{    
+      LoginUser(data)
+     
     }
+   
+    
+
   return (
     <div className='mt-5 p-5 signup_page'>
     
@@ -73,7 +51,13 @@ export default function Login() {
        <div className="form-group">
           <input type="submit" className='btn btn-success' value="login" />
         </div>
-        <p className={S}>{loginerrmsg}</p>
+        <p>{responseInfo.status==="pending"?<p>loading...</p>:""}</p>
+        <p>{responseInfo.status==="rejected"?<p className='text-danger'>invaild credentials</p>:""}</p>
+        <p>{responseInfo && responseInfo.isSuccess?<Navigate to="/"/>:""}</p>
+
+        {responseInfo.isSuccess && responseInfo.isSuccess? 
+        localStorage.setItem("usertoken",responseInfo.data.token):""}
+        
         <p>create an account? <Link to='/signup'>click here</Link></p>
        
        </form>

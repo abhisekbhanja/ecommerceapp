@@ -39,12 +39,12 @@ function App() {
 
   //USE THE DISPATCH
   const dispatch = useDispatch();
-  const user=useMyhook();
+  //const user=useMyhook();
 
-  const addProduct = (title, image, price, id) => {
+  // const addProduct = (title, image, price, id) => {
   
-    dispatch(addproduct(title, image, price, id,user.email));
-  };
+  //   dispatch(addproduct(title, image, price, id,user.email));
+  // };
   //console.log("main data V")
 //console.log(data)
   //for all category
@@ -89,21 +89,7 @@ function App() {
       <div className="App">
         <Navbar />
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <Products
-                loading={loading}
-                data={data}
-                addproduct={addProduct}
-                getcatagory={getcatagory}
-                setFilter={setFilter}
-                low={low}
-                high={high}
-              />
-            }
-          />
+          <Route exact path="/" element={<Products />} />
           {/* <Route
             exact
             path="/cart"
@@ -112,7 +98,7 @@ function App() {
           <Route
             exact
             path="/productdetails/:id"
-            element={<ProductDetails addproduct={addProduct} />}
+            element={<ProductDetails />}
           />
           <Route exact path="/checkout" element={<Checkout />} />
           <Route exact path="*" element={<Notfound />} />
