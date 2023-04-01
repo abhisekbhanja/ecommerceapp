@@ -5,13 +5,20 @@ import "../stylesheet/cart.css";
 import { Link } from "react-router-dom";
 import "../style.css";
 import { useGetAllproductsQuery } from "../all api/userapi";
+import { useAddtocartMutation, useShowUserQuery } from "../all api/userAuthapi";
 
-export default function Products() {
+export default function Products({userData}) {
 
   //redux toolkit query code
   const {data,isLoading,isError,isFetching,error}=useGetAllproductsQuery()
-  console.log(error);
- 
+  
+  
+  
+  const[Addtocart,responseInfo]=useAddtocartMutation()
+ const cart=(title,image,price,id,email)=>{
+  const cartData={title:title,image:image,price:price,id:id,email:email}
+  Addtocart(cartData);
+ }
 
  
   return (
@@ -114,14 +121,14 @@ export default function Products() {
                         Rating: {x.rating.rate}
                       </p>
                       <div className="d-flex flex-column">
-                        {/* <button
+                        <button
                           className="btn btn-primary btn-sm products_btn"
                           onClick={() =>
-                            addproduct(x.title, x.image, x.price, x.id)
+                            cart(x.title, x.image, x.price, x.id,userData?.data?.email)
                           }
                         >
                           add to cart
-                        </button> */}
+                        </button>
 
                         <Link
                           to={`/productdetails/${x.id}`}

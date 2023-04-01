@@ -9,7 +9,8 @@ import axios from 'axios'
 
 import "../stylesheet/cart.css";
 import useMyhook from "./useMyhook";
-export default function Cart({ removeproduct }) {
+import { useRemove_item_cartMutation,useIncrease_item_cartMutation,useDecrease_item_cartMutation } from "../all api/userAuthapi";
+export default function Cart({ userData }) {
   //////////////
 
   const cartsdata = useSelector((state) => state.mycart);
@@ -27,8 +28,16 @@ const [size, setsize] = useState(0)
   //   dispatch(decquantity(q2));
   // };
   /////////////////
+  const [Remove_item_cart,responseInfo]=useRemove_item_cartMutation()
+  const [Increase_item_cart]=useIncrease_item_cartMutation()
+  const [Decrease_item_cart]=useDecrease_item_cartMutation()
+
   
- 
+
+ const removeproduct=(id,_id)=>{
+  const rmvp={_id,_id,id:id}
+   Remove_item_cart(rmvp);
+ }
  
    
 
@@ -36,7 +45,7 @@ const [size, setsize] = useState(0)
   /////////////////
 const buynow=(total)=>{
  
-  if(user.firstname==""){
+  if(userData?.data?.firstname==""){
     navigate("/login")
   }
   else{
@@ -58,9 +67,9 @@ const buynow=(total)=>{
         navigate("/success");
     },
     "prefill": {
-        "name": user.firstname,
-        "email": user.email,
-        "contact": user.mobile
+        "name": userData?.data?.firstname,
+        "email": userData?.data?.email,
+        "contact": userData?.data?.mobile
     },
     "notes": {
         "address": "Razorpay Corporate Office"
@@ -84,30 +93,36 @@ const buynow=(total)=>{
 
 }
 const user = useMyhook();
-//console.log(user.cart_item);
+console.log(userData);
 
 useEffect(() => {
-  if(user){
+  if(userData){
     var sum = 0;
-    user.cart_item.map(x=>{sum=sum+x.incPrice
+    userData?.data?.cart_item.map(x=>{sum=sum+x.incPrice
     settotal(sum)
 
     })
 
   }
   
-}, [user])
+}, [userData])
 
 
 
 
 
 const inc = (q1,userid) => {
-  dispatch(incquantity(q1,userid));
+  const cartdata={id:q1,_id:userid}
+  //console.log(cartdata);
+  Increase_item_cart(cartdata)
+  //dispatch(incquantity(q1,userid));
 };
 
 const dec = (q2,userid,product_price) => {
-  dispatch(decquantity(q2,userid,product_price));
+  const cartdata={id:q2,_id:userid,inc_price:product_price}
+  //console.log(cartdata);
+  Decrease_item_cart(cartdata)
+  //dispatch(decquantity(q2,userid,product_price));
 };
 
 
@@ -127,8 +142,7 @@ const dec = (q2,userid,product_price) => {
             </button>
           </Link>
          
-           {user?  
-            user.cart_item.map(x=>{
+           {userData?.data?.cart_item.map(x=>{
                 return<div  className="card m-2 p-4" key={x.id}>
                 <div className="row">
                   <div className="col-6">
@@ -140,7 +154,7 @@ const dec = (q2,userid,product_price) => {
                     <p className="product-name">{x.title}</p>
                     <button
                       className="btn btn-info btn-sm quantity-btn"
-                      onClick={() => inc(x.id,user._id)}
+                      onClick={() => inc(x.id,userData?.data._id)}
                     >
                       +
                     </button>
@@ -153,7 +167,7 @@ const dec = (q2,userid,product_price) => {
                     {x.quantity===1?" ":
                       <button
                       className="btn btn-info btn-sm quantity-btn"
-                      onClick={() => dec(x.id,user._id,x.price)}
+                      onClick={() => dec(x.id,userData?.data._id,x.price)}
                     >
                       -
                     </button>}
@@ -166,22 +180,21 @@ const dec = (q2,userid,product_price) => {
                     <br></br>
                     <button
                       className="btn btn-danger btn-sm remove-btn"
-                      onClick={() => removeproduct(x.id,user._id)}
+                      onClick={() => removeproduct(x.id,userData?.data._id)}
                     >
                       remove
                     </button>
                   </div>
                 </div>
               </div>
-              }):
-              ""
+              })
               }
           
           
           <div className="ck d-block m-auto text-center">
-            <h5> Total : {total}$</h5>
+            <h5> Total : {Math.round(total)}$</h5>
             <button
-              onClick={()=>buynow(total)}
+              onClick={()=>buynow(Math.round(total))}
               className="btn btn-outline-secondary font-weight-bold"
             >
               proceed to check out
