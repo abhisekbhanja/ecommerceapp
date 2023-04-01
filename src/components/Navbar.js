@@ -27,12 +27,13 @@ export default function Navbar({data}) {
   //localStorage.setItem('userid',data._id)
   // const l=data.cart_item.length
  //console.log(data.__v)
-
+ let token=localStorage.getItem("usertoken");
   const logout = () => {
     //console.log("logout...........");
     localStorage.removeItem("usertoken");
+    navigate("/")
     // window.reload();
-    window.location.reload(false);
+    // window.location.reload(false);
   };
 
     //redux toolkit query code
@@ -47,7 +48,7 @@ export default function Navbar({data}) {
         </Link>
 
         <div className="dropdown ml-auto">
-          {data?<div>
+          {token?<div>
             <button className="btn btn-secondary dropdown-toggle" 
                      type="button" id="dropdownMenuButton" data-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false">
@@ -60,11 +61,11 @@ export default function Navbar({data}) {
           <Loginbtn />}
         </div>
 
-       <Link className="nav-link text-warning" to="/cart">
+       {token?<Link className="nav-link text-warning" to="/cart">
           
           <i className="fa fa-shopping-cart" aria-hidden="true"></i>
           cart ({data?.data?.cart_item.length})
-        </Link>
+        </Link>:" "}
       </nav>
     </div>
   );

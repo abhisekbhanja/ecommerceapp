@@ -6,10 +6,10 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useLoginUserMutation } from '../all api/userAuthapi';
 import { loginuser } from '../state/action-creator';
 
-export default function Login() {
+export default function Login2() {
 
     
-  let token=localStorage.getItem("usertoken");
+
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [LoginUser,responseInfo]=useLoginUserMutation()
     console.log(responseInfo);

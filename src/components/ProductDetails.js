@@ -5,14 +5,19 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import { productsContext } from "../ProductState/productsContext";
 import "../style.css";
 import { useGetAllproductsIdQuery } from "../all api/userapi";
-export default function ProductDetails() {
+import { useAddtocartMutation } from "../all api/userAuthapi";
+export default function ProductDetails({userData}) {
 
 
  //redux toolkit query code
   const {id}=useParams()
   const {data,isLoading}=useGetAllproductsIdQuery(id)
   
-
+  const[Addtocart,responseInfo]=useAddtocartMutation()
+  const cart=(title,image,price,id,email)=>{
+   const cartData={title:title,image:image,price:price,id:id,email:email}
+   Addtocart(cartData);
+  }
 
 
 
@@ -36,19 +41,14 @@ export default function ProductDetails() {
             <p className="card-text text-primary">
               <b>{data && data.price}rs</b>
             </p>
-            {/* <button
+            <button
               className="btn btn-success"
               onClick={() =>
-                addproduct(
-                  details.title,
-                  details.image,
-                  details.price,
-                  details.id
-                )
-              }
+                            cart(data.title, data.image, data.price, data.id,userData?.data?.email)
+                          }
             >
               add to cart
-            </button> */}
+            </button>
             <br />
           </div>
         </div>}

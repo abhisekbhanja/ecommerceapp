@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "../stylesheet/cart.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../style.css";
 import { useGetAllproductsQuery } from "../all api/userapi";
 import { useAddtocartMutation, useShowUserQuery } from "../all api/userAuthapi";
@@ -11,13 +11,33 @@ export default function Products({userData}) {
 
   //redux toolkit query code
   const {data,isLoading,isError,isFetching,error}=useGetAllproductsQuery()
-  
-  
-  
+  console.log(useGetAllproductsQuery());
+  const [all_data, setall_data] = useState([])
+   const [filter_data, setfilter_data] = useState(data)
+
+   
+   
+
+   //for to get different categorized
+  // const getcatagory = (e) => {
+  //   // const v = filter_data.filter((x) => {
+  //   //   return x.category === e;
+  //   // });
+  //   // console.log(v);
+  //   // setall_data(v);
+  //   console.log(data.filter(x=>{return x.category===e}));
+  // };
+  const navigate=useNavigate()
+  let token=localStorage.getItem("usertoken");
   const[Addtocart,responseInfo]=useAddtocartMutation()
  const cart=(title,image,price,id,email)=>{
-  const cartData={title:title,image:image,price:price,id:id,email:email}
+  if(token){
+    const cartData={title:title,image:image,price:price,id:id,email:email}
   Addtocart(cartData);
+  }
+  else{
+    navigate("/login")
+  }
  }
 
  
@@ -63,25 +83,25 @@ export default function Products({userData}) {
         {/* <div className="btns d-block m-auto text-center">
           <button
             className="btn btn-outline-secondary category-btn"
-            onClick={() => setFilter()}
+           
           >
             All
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => getcatagory("men's clothing")}
+           
           >
             Men's clothing
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => getcatagory("women's clothing")}
+            // onClick={() => getcatagory("women's clothing")}
           >
             Women's clothing
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => getcatagory("jewelery")}
+            // onClick={() => getcatagory("jewelery")}
           >
             Jewellary
           </button>
@@ -97,8 +117,13 @@ export default function Products({userData}) {
                   sort by
                 </button>
             <div className="dropdown-menu" aria-labelledby="triggerId">
-              <button className="dropdown-item" onClick={low}>low to high</button>
-              <button className="dropdown-item" onClick={high}>high to low</button>
+              <button className="dropdown-item" 
+              //onClick={low}
+              >low to high
+              </button>
+              <button className="dropdown-item" 
+              //onClick={high}
+              >high to low</button>
             </div>
         
         </div> */}

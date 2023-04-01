@@ -13,11 +13,11 @@ import { useRemove_item_cartMutation,useIncrease_item_cartMutation,useDecrease_i
 export default function Cart({ userData }) {
   //////////////
 
-  const cartsdata = useSelector((state) => state.mycart);
+  //const cartsdata = useSelector((state) => state.mycart);
   const navigate = useNavigate();
  
 
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 const [total, settotal] = useState(0)
 const [size, setsize] = useState(0)
   // const inc = (q1) => {
@@ -28,9 +28,16 @@ const [size, setsize] = useState(0)
   //   dispatch(decquantity(q2));
   // };
   /////////////////
+
+  let token=localStorage.getItem("usertoken");
+
   const [Remove_item_cart,responseInfo]=useRemove_item_cartMutation()
   const [Increase_item_cart]=useIncrease_item_cartMutation()
   const [Decrease_item_cart]=useDecrease_item_cartMutation()
+
+  if(!token){
+    navigate("/login")
+  }
 
   
 
@@ -92,8 +99,8 @@ const buynow=(total)=>{
 
 
 }
-const user = useMyhook();
-console.log(userData);
+// const user = useMyhook();
+// console.log(userData);
 
 useEffect(() => {
   if(userData){
@@ -146,7 +153,7 @@ const dec = (q2,userid,product_price) => {
                 return<div  className="card m-2 p-4" key={x.id}>
                 <div className="row">
                   <div className="col-6">
-                    <Link to={`/productdetails/`}>
+                    <Link to={`/productdetails/${x.id}`}>
                       <img className="cart-img" src={x.image} alt="" />
                     </Link>
                   </div>

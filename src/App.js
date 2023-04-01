@@ -18,9 +18,11 @@ import useMyhook from "./components/useMyhook";
 import { addproduct, removeproduct } from "./state/action-creator";
 import Products1 from "./components/Products1";
 import { useShowUserQuery } from "./all api/userAuthapi";
+import Login2 from "./components/Login2";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-
+  let token=localStorage.getItem("usertoken");
   const {data,isLoading,isError,isFetching,error}=useShowUserQuery()
 
   return (
@@ -37,13 +39,14 @@ function App() {
           <Route
             exact
             path="/productdetails/:id"
-            element={<ProductDetails />}
+            element={<ProductDetails userData={data}/>}
           />
           <Route exact path="/checkout" element={<Checkout />} />
           <Route exact path="*" element={<Notfound />} />
           <Route exact path="/success" element={<Success />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/login" element={<Login />} />
+          {/* <Route exact path="/loginuser" element={<Login2 />} /> */}
         </Routes>
       </div>
     </Router>
