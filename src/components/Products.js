@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "../stylesheet/cart.css";
@@ -7,10 +7,13 @@ import "../style.css";
 import { useGetAllproductsQuery } from "../all api/userapi";
 
 export default function Products() {
-  //redux toolkit query code
-  const {data,isLoading}=useGetAllproductsQuery()
-  //console.log(data);
 
+  //redux toolkit query code
+  const {data,isLoading,isError,isFetching,error}=useGetAllproductsQuery()
+  console.log(error);
+ 
+
+ 
   return (
     <div>
       {/* <img
@@ -45,9 +48,11 @@ export default function Products() {
         </a>
       </div>
       <div className="container-fluid">
-        <h3 className="p-4 text-center mt-2">Latest Products</h3>
+        <h3 className="p-4 text-center mt-2">
+          {error && error.status=='FETCH_ERROR'?'something is wrong':'LATEST PRODUCTS'}
+       </h3>
         <hr></hr>
-
+     
         {/* <div className="btns d-block m-auto text-center">
           <button
             className="btn btn-outline-secondary category-btn"
@@ -90,7 +95,7 @@ export default function Products() {
             </div>
         
         </div> */}
-
+      
         {isLoading ? (
           <div>
             <Loading />

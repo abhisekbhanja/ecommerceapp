@@ -8,6 +8,7 @@ export const userAuthapi = createApi({
   endpoints: (builder) => ({
     LoginUser: builder.mutation({
       query: (loginInfo) =>{
+        // console.log(loginInfo);
         return {
             url:`login`,
             method:`POST`,
@@ -16,9 +17,8 @@ export const userAuthapi = createApi({
       },
     }),
 
-    registerUser: builder.mutation({
+    RegisterUser: builder.mutation({
         query: (signupInfo) =>{
-            console.log(signupInfo);
           return {
               url:`register`,
               method:`POST`,

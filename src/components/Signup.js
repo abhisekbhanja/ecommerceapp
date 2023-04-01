@@ -5,40 +5,11 @@ import { useForm } from "react-hook-form";
 import "../style.css"
 import { useDispatch, useSelector } from "react-redux";
 import { signupuser } from "../state/action-creator";
+import { useRegisterUserMutation } from "../all api/userAuthapi";
 
 export default ()=> {
-  // const [firstname, setfirstname] = useState("");
-  // const [lastname, setlastname] = useState("");
-  // const [mobile, setmobile] = useState("");
-  // const [email, setemail] = useState("");
-  // const [password, setpassword] = useState("");
-  //const [existemailmsg, setexistemailmsg] = useState("");
-  const [errmsg, seterrmsg] = useState("");
-  const [loading, setloading] = useState("");
-  const [submitmsg, setsubmitmsg] = useState("");
-  const [S, setS] = useState("");
-      //USE THE DISPATCH
-      const dispatch = useDispatch();
-      const signup_userData = useSelector((state) => state.user_authReducer);
 
-      const showmsg=async()=>{
-        const datashow=await signup_userData
-        if(datashow=="true"){
-         seterrmsg("Your account craete successfully")
-         setS("alert alert-success")
-        //  navigate("/")
-        }
-        else if(datashow=="false"){
-         seterrmsg("already email exist")
-         setS("alert alert-danger")
-        }
-   
-       console.log(datashow)
-       
-     }
-    useEffect(() => {
-     showmsg()
-    })
+  
 
   const {
     register,
@@ -49,18 +20,20 @@ export default ()=> {
   } = useForm();
   const password = useRef({});
   password.current = watch("password", "");
-  const onSubmit = async (data) => {
-    dispatch(signupuser(data))
-  };
+  
   // const onSubmit = data => console.log(data);
+  const [submit_msg, setsubmit_msg] = useState("");
+  const [Registeruser,responseInfo]=useRegisterUserMutation()
+  
+  console.log(responseInfo);
 
   return (
     <div className="mt-5 p-5 signup_page">
       
       <div className="container signup-form mt-5">
         
-        <form className="p-5 card" onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="text-center">Sign up here</h2>
+        <form className="p-5 card" onSubmit={handleSubmit((data)=>Registeruser(data))}>
+        <h2 className="text-center">Sign up here {submit_msg}</h2>
         <br />
           <div className="form-group">
             <input
@@ -154,8 +127,15 @@ export default ()=> {
           <div className="form-group">
             <input type="submit" className="btn btn-primary" value="signup" />
           </div>
-          <p className="text-success">{submitmsg}</p>
-          <p className={S}>{errmsg}</p>
+         <div>
+          
+          <div>{responseInfo?.error?.originalStatus===422?<div className='alert alert-danger'>
+            email already exist
+          </div>:" "}</div>
+          <div>{responseInfo?.error?.originalStatus===200?<div className='alert alert-success'>
+            your account create successfully
+          </div>:" "}</div>
+         </div>
           <p>
             already have account? <Link to="/login">click here</Link>
           </p>

@@ -7,21 +7,13 @@ import { useLoginUserMutation } from '../all api/userAuthapi';
 import { loginuser } from '../state/action-creator';
 
 export default function Login() {
-    const [email, setemail] = useState("");
-    const [password, setpassword] = useState("");
-    const [loginerrmsg, setloginerrmsg] = useState("");
-    const [S, setS] = useState("");
 
     
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [LoginUser,responseInfo]=useLoginUserMutation()
     console.log(responseInfo);
-   const [err_msg, seterr_msg] = useState("")
-    const onSubmit=(data)=>{    
-      LoginUser(data)
-     
-    }
+  
    
     
 
@@ -31,7 +23,7 @@ export default function Login() {
     <div className="container signup-form mt-5">
 
 
-       <form className='p-5 card' onSubmit={handleSubmit(onSubmit)}>
+       <form className='p-5 card' onSubmit={handleSubmit((data)=>LoginUser(data))}>
        <h2 className='text-center'>Login here</h2>
        <br />
        <div className="form-group">
@@ -51,9 +43,11 @@ export default function Login() {
        <div className="form-group">
           <input type="submit" className='btn btn-success' value="login" />
         </div>
-        <p>{responseInfo.status==="pending"?<p>loading...</p>:""}</p>
-        <p>{responseInfo.status==="rejected"?<p className='text-danger'>invaild credentials</p>:""}</p>
+        
+        <p>{responseInfo.status==="pending"?<p> <div className="spinner-border text-warning"></div> loading...</p>:""}</p>
+        
         <p>{responseInfo && responseInfo.isSuccess?<Navigate to="/"/>:""}</p>
+        <p>{responseInfo?.error?.originalStatus===401?<p className='alert alert-danger'>invaild credentials</p>:""}</p>
 
         {responseInfo.isSuccess && responseInfo.isSuccess? 
         localStorage.setItem("usertoken",responseInfo.data.token):""}
