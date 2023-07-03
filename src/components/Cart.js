@@ -143,11 +143,11 @@ const dec = (q2,userid,product_price) => {
         </h1>
      
         <div className="container-fluid mt-5">
-          <Link to="/">
+          {/* <Link to="/">
             <button className="btn btn-outline-primary btn-sm mt-4">
               back
             </button>
-          </Link>
+          </Link> */}
          
            {userData?.data?.cart_item.map(x=>{
                 return<div  className="card m-2 p-4" key={x.id}>

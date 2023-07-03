@@ -39,7 +39,7 @@ export const userAuthapi = createApi({
       }),
       Addtocart: builder.mutation({
         query: (cartdata) =>{
-         console.log(cartdata);
+         //console.log(cartdata);
           return {
               url:`cartdata`,
               method:`POST`,

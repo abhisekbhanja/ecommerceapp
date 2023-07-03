@@ -25,7 +25,7 @@ export default ()=> {
   const [submit_msg, setsubmit_msg] = useState("");
   const [Registeruser,responseInfo]=useRegisterUserMutation()
   
-  console.log(responseInfo);
+  //console.log(responseInfo);
 
   return (
     <div className="mt-5 p-5 signup_page">
@@ -108,6 +108,7 @@ export default ()=> {
                 },
               })}
               placeholder="Enter your password"
+              autoComplete="on"
             />
             <p className="text-danger">{errors.password?.message}</p>
           </div>
@@ -121,6 +122,7 @@ export default ()=> {
               validate: value =>
               value === password.current || "The passwords do not match"})}
               placeholder="Confirm your password"
+              autoComplete="on"
             />
             <p className="text-danger">{errors.cpassword?.message}</p>
           </div>

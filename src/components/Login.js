@@ -12,7 +12,7 @@ export default function Login() {
   let token=localStorage.getItem("usertoken");
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [LoginUser,responseInfo]=useLoginUserMutation()
-    console.log(responseInfo);
+    //console.log(responseInfo);
   
    
     
@@ -31,28 +31,29 @@ export default function Login() {
           className={errors.email?'form-control is-invalid':'form-control'}
          {...register("email",{required:"this field is required"})}
           placeholder="Enter your email" />
-          <p className='text-danger'>{errors.email?.message}</p>
+          <div className='text-danger'>{errors.email?.message}</div>
         </div>
        <div className="form-group">
           <input type="password"
           className={errors.password?'form-control is-invalid':'form-control'}
           {...register("password",{required:"this field is required"})}
-          placeholder="Enter your password" />
-          <p className='text-danger'>{errors.password?.message}</p>
+          placeholder="Enter your password"
+          autoComplete='on' />
+          <div className='text-danger'>{errors.password?.message}</div>
         </div>
        <div className="form-group">
           <input type="submit" className='btn btn-success' value="login" />
         </div>
         
-        <p>{responseInfo.status==="pending"?<p> <div className="spinner-border text-warning"></div> loading...</p>:""}</p>
+        <div>{responseInfo.status==="pending"?<div> <div className="spinner-border text-warning"></div> loading...</div>:""}</div>
         
-        <p>{responseInfo && responseInfo.isSuccess?<Navigate to="/"/>:""}</p>
-        <p>{responseInfo?.error?.originalStatus===401?<p className='alert alert-danger'>invaild credentials</p>:""}</p>
+        <div>{responseInfo && responseInfo.isSuccess?<Navigate to="/"/>:""}</div>
+        <div>{responseInfo?.error?.originalStatus===401?<div className='alert alert-danger'>invaild credentials</div>:""}</div>
 
         {responseInfo.isSuccess && responseInfo.isSuccess? 
         localStorage.setItem("usertoken",responseInfo.data.token):""}
         
-        <p>create an account? <Link to='/signup'>click here</Link></p>
+        <div>create an account? <Link to='/signup'>click here</Link></div>
        
        </form>
     </div>

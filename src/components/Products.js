@@ -7,14 +7,24 @@ import "../style.css";
 import { useGetAllproductsQuery } from "../all api/userapi";
 import { useAddtocartMutation, useShowUserQuery } from "../all api/userAuthapi";
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 export default function Products({userData}) {
 
   //redux toolkit query code
   const {data,isLoading,isError,isFetching,error}=useGetAllproductsQuery()
-  console.log(useGetAllproductsQuery());
+
   const [all_data, setall_data] = useState([])
    const [filter_data, setfilter_data] = useState(data)
 
+   const [api_data, setapi_data] = useState([])
+ const load_data=()=>{
+   setapi_data(data)
+ }
+   useEffect(() => {
+    load_data()  
+   }, [data])
    
    
 
@@ -34,11 +44,30 @@ export default function Products({userData}) {
   if(token){
     const cartData={title:title,image:image,price:price,id:id,email:email}
   Addtocart(cartData);
+  toast.success("Added to cart");
   }
   else{
     navigate("/login")
   }
  }
+
+ const getcatagory=(category)=>{
+   console.log(category);
+   let f_data=data.filter(x=>x.category==category)
+   setapi_data(f_data)
+   
+ }
+ const low = () => {
+  let m = data.slice().sort((a, b) => a.price - b.price)
+  setapi_data(m)
+  }
+
+ const high = () => {
+  let m = data.slice().sort((a, b) => b.price - a.price)
+  setapi_data(m)
+  }
+
+
 
  
   return (
@@ -80,34 +109,34 @@ export default function Products({userData}) {
        </h3>
         <hr></hr>
      
-        {/* <div className="btns d-block m-auto text-center">
+        <div className="btns d-block m-auto text-center">
           <button
             className="btn btn-outline-secondary category-btn"
-           
+            onClick={() => setapi_data(data)}
           >
             All
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-           
+           onClick={() => getcatagory("men's clothing")}
           >
             Men's clothing
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            // onClick={() => getcatagory("women's clothing")}
+            onClick={() => getcatagory("women's clothing")}
           >
             Women's clothing
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            // onClick={() => getcatagory("jewelery")}
+            onClick={() => getcatagory("jewelery")}
           >
             Jewellary
           </button>
           <button
             className="btn btn-outline-secondary ml-2 category-btn"
-            onClick={() => getcatagory("electronics")}
+             onClick={() => getcatagory("electronics")}
           >
             Electronics
           </button>
@@ -118,15 +147,15 @@ export default function Products({userData}) {
                 </button>
             <div className="dropdown-menu" aria-labelledby="triggerId">
               <button className="dropdown-item" 
-              //onClick={low}
+              onClick={low}
               >low to high
               </button>
               <button className="dropdown-item" 
-              //onClick={high}
+              onClick={high}
               >high to low</button>
             </div>
         
-        </div> */}
+        </div>
       
         {isLoading ? (
           <div>
@@ -134,7 +163,7 @@ export default function Products({userData}) {
           </div>
         ) : (
           <div className="row">
-            {data && data.map((x) => {
+            {api_data && api_data.map((x) => {
               return (
                 <div className="col-6 col-lg-3" key={x.id}>
                   <div className="card product_card text-center mt-4 p-2">
@@ -154,7 +183,18 @@ export default function Products({userData}) {
                         >
                           add to cart
                         </button>
-
+                        <ToastContainer
+position="top-center"
+autoClose={900}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
                         <Link
                           to={`/productdetails/${x.id}`}
                           className="productlist_text mt-1"
