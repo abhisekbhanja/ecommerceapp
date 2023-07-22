@@ -9,6 +9,7 @@ import { useAddtocartMutation, useShowUserQuery } from "../all api/userAuthapi";
 
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+import { Button } from "@material-ui/core";
 
 export default function Products({userData}) {
 
@@ -110,41 +111,40 @@ export default function Products({userData}) {
         <hr></hr>
      
         <div className="btns d-block m-auto text-center">
-          <button
+          <Button variant="contained"
             className="btn btn-outline-secondary category-btn"
             onClick={() => setapi_data(data)}
           >
             All
-          </button>
-          <button
-            className="btn btn-outline-secondary ml-2 category-btn"
+          </Button>
+          <Button variant="contained" className="ml-2"
            onClick={() => getcatagory("men's clothing")}
           >
             Men's clothing
-          </button>
-          <button
-            className="btn btn-outline-secondary ml-2 category-btn"
+          </Button>
+          <Button variant="contained"
+            className=" ml-2"
             onClick={() => getcatagory("women's clothing")}
           >
             Women's clothing
-          </button>
-          <button
+          </Button>
+          <Button variant="contained"
             className="btn btn-outline-secondary ml-2 category-btn"
             onClick={() => getcatagory("jewelery")}
           >
             Jewellary
-          </button>
-          <button
+          </Button>
+          <Button variant="contained"
             className="btn btn-outline-secondary ml-2 category-btn"
              onClick={() => getcatagory("electronics")}
           >
             Electronics
-          </button>
+          </Button>
          
-            <button className="btn btn-secondary ml-2 dropdown-toggle category-btn" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+            <Button variant="contained" className=" ml-2 dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                   sort by
-                </button>
+                </Button>
             <div className="dropdown-menu" aria-labelledby="triggerId">
               <button className="dropdown-item" 
               onClick={low}
@@ -175,14 +175,13 @@ export default function Products({userData}) {
                         Rating: {x.rating.rate}
                       </p>
                       <div className="d-flex flex-column">
-                        <button
-                          className="btn btn-primary btn-sm products_btn"
+                        <Button variant="contained" color="primary"
                           onClick={() =>
                             cart(x.title, x.image, x.price, x.id,userData?.data?.email)
                           }
                         >
                           add to cart
-                        </button>
+                        </Button>
                         <ToastContainer
 position="top-center"
 autoClose={900}
