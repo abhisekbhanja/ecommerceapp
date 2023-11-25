@@ -30,14 +30,14 @@ export default function ProductDetails({userData}) {
       
          {isLoading?<ProductdetailsLoad />:
           <div className="card details_card p-5 mt-5">
-          <img src={data && data.image} />
+          <img className="img-fluid" src={data && data.image} height="20" width="100" />
           <div className="card-body">
             <br></br>
             <h5 className="card-title text-warning">
               <b>{data && data.title}</b>
             </h5>
             <h5 className="card-title">Catagory: {data && data.category}</h5>
-            <h5 className="card-title">Description: {data && data.description}</h5>
+            <p className="card-title">Description: {data && data.description}</p>
             <p className="card-text text-primary">
               <b>{data && data.price}rs</b>
             </p>
@@ -54,6 +54,7 @@ export default function ProductDetails({userData}) {
         </div>}
         
       </div>
+     
     </div>
   );
 }
