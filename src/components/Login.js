@@ -18,14 +18,15 @@ export default function Login() {
     
 
   return (
-    <div className='mt-5 p-5 signup_page'>
+    <div className='mt-5 p-1 signup_page'>
     
     <div className="container signup-form mt-5">
 
 
-       <form className='p-5 card' onSubmit={handleSubmit((data)=>LoginUser(data))}>
-       <h2 className='text-center'>Login here</h2>
+       <form className='p-4 card' onSubmit={handleSubmit((data)=>LoginUser(data))}>
+       <h5 className='text-center'>Login here</h5>
        <br />
+       
        <div className="form-group">
           <input type="text"
           className={errors.email?'form-control is-invalid':'form-control'}
@@ -53,7 +54,7 @@ export default function Login() {
         {responseInfo.isSuccess && responseInfo.isSuccess? 
         localStorage.setItem("usertoken",responseInfo.data.token):""}
         
-        <div>create an account? <Link to='/signup'>click here</Link></div>
+        <small>create an account? <Link to='/signup'>click here</Link></small>
        
        </form>
     </div>

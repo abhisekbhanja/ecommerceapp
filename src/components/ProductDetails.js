@@ -1,22 +1,34 @@
-import React, { useContext, useEffect, useState } from "react";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import React from "react";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { productsContext } from "../ProductState/productsContext";
+import { Link, useNavigate, useParams } from "react-router-dom";
+//import { productsContext } from "../ProductState/productsContext";
 import "../style.css";
 import { useGetAllproductsIdQuery } from "../all api/userapi";
 import { useAddtocartMutation } from "../all api/userAuthapi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function ProductDetails({userData}) {
 
 
  //redux toolkit query code
   const {id}=useParams()
   const {data,isLoading}=useGetAllproductsIdQuery(id)
-  
+  const navigate = useNavigate();
   const[Addtocart,responseInfo]=useAddtocartMutation()
   const cart=(title,image,price,id,email)=>{
+    let token = localStorage.getItem("usertoken");
    const cartData={title:title,image:image,price:price,id:id,email:email}
-   Addtocart(cartData);
+
+   if(token){
+    Addtocart(cartData);
+    toast.success("Added to cart");
+   }
+   else{
+    navigate("/login");
+   }
+   
   }
 
 
@@ -39,7 +51,7 @@ export default function ProductDetails({userData}) {
             <h5 className="card-title">Catagory: {data && data.category}</h5>
             <p className="card-title">Description: {data && data.description}</p>
             <p className="card-text text-primary">
-              <b>{data && data.price}rs</b>
+              <b>{data && data.price} rs</b>
             </p>
             <button
               className="btn btn-success"
@@ -49,6 +61,18 @@ export default function ProductDetails({userData}) {
             >
               add to cart
             </button>
+            <ToastContainer
+                            position="top-center"
+                            autoClose={900}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                          />
             <br />
           </div>
         </div>}

@@ -199,7 +199,7 @@ const dec = (q2,userid,product_price) => {
           
           
           <div className="ck d-block m-auto text-center">
-            <h5> Total : {Math.round(total)}$</h5>
+            <h5> Total : {Math.round(total)} rs</h5>
             <button
               onClick={()=>buynow(Math.round(total))}
               className="btn btn-outline-secondary font-weight-bold"

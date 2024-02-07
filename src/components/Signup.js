@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import React, {  useRef, useState } from "react";
+//import axios from "axios";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "../style.css"
-import { useDispatch, useSelector } from "react-redux";
-import { signupuser } from "../state/action-creator";
+//import { useDispatch, useSelector } from "react-redux";
+//import { signupuser } from "../state/action-creator";
 import { useRegisterUserMutation } from "../all api/userAuthapi";
 
 export default ()=> {
@@ -14,7 +14,6 @@ export default ()=> {
   const {
     register,
     handleSubmit,
-    reset,
     watch,
     formState: { errors },
   } = useForm();
@@ -28,12 +27,12 @@ export default ()=> {
   //console.log(responseInfo);
 
   return (
-    <div className="mt-5 p-5 signup_page">
+    <div className="mt-5 p-1 signup_page">
       
-      <div className="container signup-form mt-5">
+      <div className="container mt-5 signup-form ">
         
-        <form className="p-5 card" onSubmit={handleSubmit((data)=>Registeruser(data))}>
-        <h2 className="text-center">Sign up here {submit_msg}</h2>
+        <form className="p-2 card" onSubmit={handleSubmit((data)=>Registeruser(data))}>
+        <h5 className="text-center">Sign up here {submit_msg}</h5>
         <br />
           <div className="form-group">
             <input

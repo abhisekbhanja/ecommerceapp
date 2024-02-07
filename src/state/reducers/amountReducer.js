@@ -1,5 +1,5 @@
 import axios from "axios";
-import useMyhook from "../../components/useMyhook";
+//import useMyhook from "../../components/useMyhook";
 
 const cartReducer = async(state = [], action) => {
   switch (action.type) {
@@ -14,7 +14,7 @@ const cartReducer = async(state = [], action) => {
 
     try {
       const response=axios.post(`${process.env.REACT_APP_SURL}/cartdata`,cartdata);
-      if(response.status==201){
+      if(response.status===201){
         console.log("ADD TO CART")
         state= "add to cart"
     }
@@ -30,7 +30,7 @@ const cartReducer = async(state = [], action) => {
 
       try {
         const response=axios.put(`${process.env.REACT_APP_SURL}/increase`,{_id:action.userid,id:action.q1});
-        if(response.status==201){
+        if(response.status===201){
           console.log("inc "+action.q1+" "+action.userid)
       
       }
@@ -43,7 +43,7 @@ const cartReducer = async(state = [], action) => {
       try {
         const response=axios.put(`${process.env.REACT_APP_SURL}/decrease`,
         {_id:action.userid,id:action.q2,product_price:action.product_price});
-        if(response.status==201){
+        if(response.status===201){
           console.log("inc "+action.q2+" "+action.userid)
       
       }
