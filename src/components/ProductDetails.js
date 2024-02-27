@@ -1,68 +1,84 @@
-import React, { useContext, useEffect, useState } from "react";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import React from "react";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { productsContext } from "../ProductState/productsContext";
+import { Link, useNavigate, useParams } from "react-router-dom";
+//import { productsContext } from "../ProductState/productsContext";
 import "../style.css";
-export default function ProductDetails({ addproduct }) {
-  const carts = useContext(productsContext);
-  const [details, setdetails] = useState("");
-  //get the parameter from url use useParams hook
-  const p = useParams().id;
-  //console.log("id " + p);
-  const [productload, setproductload] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      fetchItem();
-    }, 2000);
-  }, []);
+import { useGetAllproductsIdQuery } from "../all api/userapi";
+import { useAddtocartMutation } from "../all api/userAuthapi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-  const fetchItem = async () => {
-    const details = await fetch(`${process.env.REACT_APP_URL}/${p}`);
-    const item = await details.json();
-    setdetails(item);
-    setproductload(false);
-    //console.log(item);
-  };
+export default function ProductDetails({userData}) {
+
+
+ //redux toolkit query code
+  const {id}=useParams()
+  const {data,isLoading}=useGetAllproductsIdQuery(id)
+  const navigate = useNavigate();
+  const[Addtocart,responseInfo]=useAddtocartMutation()
+  const cart=(title,image,price,id,email)=>{
+    let token = localStorage.getItem("usertoken");
+   const cartData={title:title,image:image,price:price,id:id,email:email}
+
+   if(token){
+    Addtocart(cartData);
+    toast.success("Added to cart");
+   }
+   else{
+    navigate("/login");
+   }
+   
+  }
+
+
+
   return (
     <div>
       <div className="container">
         <Link to="/">
           <button className="btn btn-outline-primary mt-3">back</button>
         </Link>
-        {productload ? (
-          <ProductdetailsLoad />
-        ) : (
+      
+         {isLoading?<ProductdetailsLoad />:
           <div className="card details_card p-5 mt-5">
-            <img src={details.image} />
-            <div className="card-body">
-              <br></br>
-              <h5 className="card-title text-warning">
-                <b>{details.title}</b>
-              </h5>
-              <h5 className="card-title">Catagory: {details.category}</h5>
-              <h5 className="card-title">Description: {details.description}</h5>
-              <p className="card-text text-primary">
-                <b>{details.price}rs</b>
-              </p>
-              <button
-                className="btn btn-success"
-                onClick={() =>
-                  addproduct(
-                    details.title,
-                    details.image,
-                    details.price,
-                    details.id
-                  )
-                }
-              >
-                add to cart
-              </button>
-              <br />
-            </div>
+          <img className="img-fluid" src={data && data.image} height="20" width="100" />
+          <div className="card-body">
+            <br></br>
+            <h5 className="card-title text-warning">
+              <b>{data && data.title}</b>
+            </h5>
+            <h5 className="card-title">Catagory: {data && data.category}</h5>
+            <p className="card-title">Description: {data && data.description}</p>
+            <p className="card-text text-primary">
+              <b>{data && data.price} rs</b>
+            </p>
+            <button
+              className="btn btn-success"
+              onClick={() =>
+                            cart(data.title, data.image, data.price, data.id,userData?.data?.email)
+                          }
+            >
+              add to cart
+            </button>
+            <ToastContainer
+                            position="top-center"
+                            autoClose={900}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                          />
+            <br />
           </div>
-        )}
+        </div>}
+        
       </div>
+     
     </div>
   );
 }

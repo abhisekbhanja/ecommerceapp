@@ -11,9 +11,12 @@
     .products-list{
         height: 400px;
     }
+    .product_card{
+        width: 350px;
+    }
     .product_card img{
         width: 200px;
-        height: 200px;
+        height: 170px;
         display: block;
         margin: auto;
     }
@@ -47,7 +50,7 @@ font-size: 5px;
         margin: auto;
     }
     .product_card{
-        height: 270px;
+        height: 230px;
     }
     .productlist_text{
         font-size: 2vw;

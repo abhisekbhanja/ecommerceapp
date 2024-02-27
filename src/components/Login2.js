@@ -6,55 +6,53 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useLoginUserMutation } from '../all api/userAuthapi';
 import { loginuser } from '../state/action-creator';
 
-export default function Login() {
+export default function Login2() {
 
     
-  let token=localStorage.getItem("usertoken");
+
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [LoginUser,responseInfo]=useLoginUserMutation()
-    //console.log(responseInfo);
+    console.log(responseInfo);
   
    
     
 
   return (
-    <div className='mt-5 p-1 signup_page'>
+    <div className='mt-5 p-5 signup_page'>
     
     <div className="container signup-form mt-5">
 
 
-       <form className='p-4 card' onSubmit={handleSubmit((data)=>LoginUser(data))}>
-       <h5 className='text-center'>Login here</h5>
+       <form className='p-5 card' onSubmit={handleSubmit((data)=>LoginUser(data))}>
+       <h2 className='text-center'>Login here</h2>
        <br />
-       
        <div className="form-group">
           <input type="text"
           className={errors.email?'form-control is-invalid':'form-control'}
          {...register("email",{required:"this field is required"})}
           placeholder="Enter your email" />
-          <div className='text-danger'>{errors.email?.message}</div>
+          <p className='text-danger'>{errors.email?.message}</p>
         </div>
        <div className="form-group">
           <input type="password"
           className={errors.password?'form-control is-invalid':'form-control'}
           {...register("password",{required:"this field is required"})}
-          placeholder="Enter your password"
-          autoComplete='on' />
-          <div className='text-danger'>{errors.password?.message}</div>
+          placeholder="Enter your password" />
+          <p className='text-danger'>{errors.password?.message}</p>
         </div>
        <div className="form-group">
           <input type="submit" className='btn btn-success' value="login" />
         </div>
         
-        <div>{responseInfo.status==="pending"?<div> <div className="spinner-border text-warning"></div> loading...</div>:""}</div>
+        <p>{responseInfo.status==="pending"?<p> <div className="spinner-border text-warning"></div> loading...</p>:""}</p>
         
-        <div>{responseInfo && responseInfo.isSuccess?<Navigate to="/"/>:""}</div>
-        <div>{responseInfo?.error?.originalStatus===401?<div className='alert alert-danger'>invaild credentials</div>:""}</div>
+        <p>{responseInfo && responseInfo.isSuccess?<Navigate to="/"/>:""}</p>
+        <p>{responseInfo?.error?.originalStatus===401?<p className='alert alert-danger'>invaild credentials</p>:""}</p>
 
         {responseInfo.isSuccess && responseInfo.isSuccess? 
         localStorage.setItem("usertoken",responseInfo.data.token):""}
         
-        <small>create an account? <Link to='/signup'>click here</Link></small>
+        <p>create an account? <Link to='/signup'>click here</Link></p>
        
        </form>
     </div>
