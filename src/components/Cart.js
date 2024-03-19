@@ -60,7 +60,7 @@ const buynow=(total)=>{
       //console.log(total)
       //console.log(info)
   var options = {
-    "key": process.env.REACT_APP_APIKEY, 
+    "key": "rzp_test_eJGf4EbA9Hy5Y2", 
     // "amount": info.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     "currency": "INR",
     "name": "Acme Corp",
