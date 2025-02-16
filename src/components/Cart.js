@@ -11,7 +11,7 @@ import "../stylesheet/cart.css";
 import useMyhook from "./useMyhook";
 export default function Cart({ removeproduct }) {
   //////////////
-
+  //testing changing in remote
   const cartsdata = useSelector((state) => state.mycart);
   const navigate = useNavigate();
  
